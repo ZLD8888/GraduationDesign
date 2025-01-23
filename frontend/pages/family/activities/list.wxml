@@ -1,0 +1,4 @@
+<view class="container">
+  <view class="title">近期活动</view>
+  <!-- 这里可以添加活动列表 -->
+</view> 

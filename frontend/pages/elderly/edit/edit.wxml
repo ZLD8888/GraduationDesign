@@ -1,0 +1,1 @@
+<elderly-form submit-text="保存" formData="{{formData}}" bind:submit="handleSubmit"></elderly-form> 

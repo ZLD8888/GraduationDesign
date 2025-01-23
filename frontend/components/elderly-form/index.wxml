@@ -1,0 +1,77 @@
+<view class="form-container">
+  <form bindsubmit="handleSubmit">
+    <!-- 基本信息 -->
+    <view class="section">
+      <view class="section-title">基本信息</view>
+      <view class="form-item">
+        <text class="label">姓名</text>
+        <input name="name" value="{{formData.name}}" placeholder="请输入姓名" />
+      </view>
+      <view class="form-item">
+        <text class="label" style="margin-bottom: 5px;">性别</text>
+        <picker name="gender" bindchange="handleGenderChange" value="{{genderIndex}}" range="{{genders}}" >
+          <view class="picker centered-picker">{{genders[genderIndex] || '请选择性别'}}</view>
+        </picker>
+      </view>
+      <view class="form-item">
+        <text class="label" style="margin-bottom: 5px;">出生日期</text>
+        <picker name="birthDate" mode="date" bindchange="handleDateChange" data-field="birthDate">
+          <view class="picker centered-picker">{{formData.birthDate || '请选择出生日期'}}</view>
+        </picker>
+      </view>
+      <view class="form-item">
+        <text class="label" style="margin-bottom: 5px;">身份证号</text>
+        <input name="idCard" value="{{formData.idCard}}" placeholder="请输入身份证号" />
+      </view>
+    </view>
+
+    <!-- 住院信息 -->
+    <view class="section">
+      <view class="section-title">住院信息</view>
+      <view class="form-item">
+        <text class="label" style="margin-bottom: 5px;">床位号</text>
+        <input name="bedNumber" value="{{formData.bedNumber}}" placeholder="请输入床位号" />
+      </view>
+      <view class="form-item">
+        <text class="label" style="margin-bottom: 5px;">入院日期</text>
+        <picker name="checkInDate" mode="date" bindchange="handleDateChange" data-field="checkInDate">
+          <view class="picker centered-picker">{{formData.checkInDate || '请选择入院日期'}}</view>
+        </picker>
+      </view>
+      <view class="form-item">
+        <text class="label" style="margin-bottom: 5px;">护工</text>
+        <picker name="caregiverId" bindchange="handleCaregiverChange" value="{{caregiverIndex}}" range="{{caregivers}}" range-key="name">
+          <view class="picker centered-picker">{{caregivers[caregiverIndex].name || '请选择护工'}}</view>
+        </picker>
+      </view>
+    </view>
+
+    <!-- 健康状况 -->
+    <view class="section">
+      <view class="section-title">健康状况</view>
+      <view class="form-item">
+        <text class="label" style="margin-bottom: 5px;">健康状况</text>
+        <textarea name="healthCondition" value="{{formData.healthCondition}}" placeholder="请输入健康状况描述" />
+      </view>
+      <view class="form-item">
+        <text class="label" style="margin-bottom: 5px;">饮食限制</text>
+        <textarea name="dietaryRestrictions" value="{{formData.dietaryRestrictions}}" placeholder="请输入饮食限制" />
+      </view>
+    </view>
+
+    <!-- 紧急联系人 -->
+    <view class="section">
+      <view class="section-title">紧急联系人</view>
+      <view class="form-item">
+        <text class="label" style="margin-bottom: 5px;">姓名</text>
+        <input name="emergencyContactName" value="{{formData.emergencyContactName}}" placeholder="请输入紧急联系人姓名" />
+      </view>
+      <view class="form-item">
+        <text class="label" style="margin-bottom: 5px;">电话</text>
+        <input name="emergencyContactPhone" value="{{formData.emergencyContactPhone}}" placeholder="请输入紧急联系人电话" />
+      </view>
+    </view>
+
+    <button class="submit-btn" form-type="submit">{{submitText}}</button>
+  </form>
+</view> 

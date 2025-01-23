@@ -1,0 +1,21 @@
+<view class="container">
+  <view class="login-box" style="background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+    <view class="title">登录</view>
+    <form bindsubmit="handleLogin">
+      <view class="input-group">
+        <input type="text" name="phone" placeholder="请输入手机号" style="background-image: url('/images/phone.png'); background-size: 20px; background-position: 10px center; background-repeat: no-repeat; padding-left: 40px;" />
+      </view>
+      <view class="input-group">
+        <input type="password" name="password" placeholder="请输入密码" style="background-image: url('/images/password.png'); background-size: 20px; background-position: 10px center; background-repeat: no-repeat; padding-left: 40px;" />
+      </view>
+      <button class="btn-primary" form-type="submit" style="margin-top: 10px;">登录</button>
+    </form>
+    <button class="btn-wechat" bindtap="handleWechatLogin" style="margin-top: 10px;">微信一键登录</button>
+    <view class="register-link" bindtap="goToRegister" style="margin-top: 10px;">
+      还没有账号？立即注册
+    </view>
+  </view>
+</view> 
+<view style="margin-top: 10px; text-align: center; font-size: 12px; color: #888; display: flex; justify-content: center; align-items: center;">
+  注册代表已经同意<span style="color: #1296db; margin-left: 5px; margin-right: 5px;">用户协议</span>以及<span style="color: #1296db; margin-left: 5px; margin-right: 5px;">隐私政策</span>
+</view>

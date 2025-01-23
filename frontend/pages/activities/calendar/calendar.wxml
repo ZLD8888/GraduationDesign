@@ -1,0 +1,40 @@
+<view class="container">
+  <view class="calendar-header">
+    <view class="arrow" bindtap="prevMonth">◀</view>
+    <view class="current-month">{{year}}年{{month + 1}}月</view>
+    <view class="arrow" bindtap="nextMonth">▶</view>
+  </view>
+
+  <view class="weekdays">
+    <view wx:for="{{weekdays}}" wx:key="*this">{{item}}</view>
+  </view>
+
+  <view class="calendar-grid">
+    <view 
+      wx:for="{{days}}" 
+      wx:key="date" 
+      class="day {{item.isCurrentMonth ? '' : 'other-month'}} {{item.hasActivity ? 'has-activity' : ''}}"
+      bindtap="showDayActivities"
+      data-date="{{item.date}}">
+      <text>{{item.day}}</text>
+      <view class="activity-dot" wx:if="{{item.hasActivity}}"></view>
+    </view>
+  </view>
+
+  <view class="activities-panel" wx:if="{{selectedActivities.length > 0}}">
+    <view class="panel-header">
+      <text class="selected-date">{{selectedDate}}活动安排</text>
+    </view>
+    <view class="activity-list">
+      <view class="activity-item" 
+        wx:for="{{selectedActivities}}" 
+        wx:key="id"
+        bindtap="goToDetail"
+        data-id="{{item.id}}">
+        <view class="activity-time">{{item.startTime}} - {{item.endTime}}</view>
+        <view class="activity-name">{{item.name}}</view>
+        <view class="activity-location">{{item.location}}</view>
+      </view>
+    </view>
+  </view>
+</view> 

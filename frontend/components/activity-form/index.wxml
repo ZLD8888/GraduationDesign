@@ -1,0 +1,54 @@
+<view class="form-container">
+  <form bindsubmit="handleSubmit">
+    <view class="form-section">
+      <view class="form-item">
+        <text class="label" style="padding-bottom: 5px;">活动名称</text>
+        <input name="name" value="{{formData.name}}" placeholder="请输入活动名称" />
+      </view>
+
+      <view class="form-item">
+        <text class="label" style="padding-bottom: 5px;">开始时间</text>
+        <picker mode="date" name="startDate" value="{{formData.startDate}}" bindchange="handleStartDateChange" style="padding-bottom: 10px;">
+          <view class="picker" style="padding-top: 10px;">{{formData.startDate || '请选择日期'}}</view>
+        </picker>
+        <picker mode="time" name="startTime" value="{{formData.startTime}}" bindchange="handleStartTimeChange">
+          <view class="picker" style="padding-top: 10px;">{{formData.startTime || '请选择时间'}}</view>
+        </picker>
+      </view>
+
+      <view class="form-item">
+        <text class="label" style="padding-bottom: 5px;">结束时间</text>
+        <picker mode="date" name="endDate" value="{{formData.endDate}}" bindchange="handleEndDateChange" style="padding-bottom: 10px;">
+          <view class="picker" style="padding-top: 10px;">{{formData.endDate || '请选择日期'}}</view>
+        </picker>
+        <picker mode="time" name="endTime" value="{{formData.endTime}}" bindchange="handleEndTimeChange">
+          <view class="picker" style="padding-top: 10px;">{{formData.endTime || '请选择时间'}}</view>
+        </picker>
+      </view>
+
+      <view class="form-item">
+        <text class="label" style="padding-bottom: 5px;">活动地点</text>
+        <input name="location" value="{{formData.location}}" placeholder="请输入活动地点" />
+      </view>
+
+      <view class="form-item">
+        <text class="label" style="padding-bottom: 5px;">最大参与人数</text>
+        <input type="number" name="maxParticipants" value="{{formData.maxParticipants}}" placeholder="不填则不限制人数" />
+      </view>
+
+      <view class="form-item">
+        <text class="label" style="padding-bottom: 5px;">活动状态</text>
+        <picker name="status" bindchange="handleStatusChange" value="{{statusIndex}}" range="{{statusList}}" range-key="label">
+          <view class="picker" style="padding-top: 10px;">{{statusList[statusIndex].label || '请选择状态'}}</view>
+        </picker>
+      </view>
+
+      <view class="form-item">
+        <text class="label" style="padding-bottom: 5px;">活动描述</text>
+        <textarea name="description" value="{{formData.description}}" placeholder="请输入活动描述" />
+      </view>
+    </view>
+
+    <button class="submit-btn" form-type="submit">{{submitText}}</button>
+  </form>
+</view> 

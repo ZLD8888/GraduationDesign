@@ -1,0 +1,4 @@
+<health-record-form 
+  submit-text="添加记录" 
+  bind:submit="handleSubmit">
+</health-record-form> 

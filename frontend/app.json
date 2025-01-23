@@ -1,0 +1,81 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/register/register",
+    "pages/admin/home/index",
+    "pages/staff/home/index",
+    "pages/family/home/index",
+    "pages/elderly/home/index",
+    "pages/admin/activities/list",
+    "pages/activities/detail/detail",
+    "pages/activities/add/add",
+    "pages/activities/edit/edit",
+    "pages/activities/calendar/calendar",
+    "pages/message/index",
+    "pages/profile/index",
+    "pages/elderly/list/list",
+    "pages/elderly/add/add",
+    "pages/elderly/detail/detail",
+    "pages/elderly/edit/edit",
+    "pages/elderly/health/list",
+    "pages/elderly/health/detail",
+    "pages/elderly/health/add",
+    "pages/staff/activities/list",
+    "pages/family/elderly/info/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "养老院管理系统",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#999999",
+    "selectedColor": "#1296db",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/admin/home/index",
+        "text": "首页",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home-active.png"
+      },
+      {
+        "pagePath": "pages/staff/home/index",
+        "text": "首页",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home-active.png"
+      },
+      {
+        "pagePath": "pages/family/home/index",
+        "text": "首页",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home-active.png"
+      },
+      {
+        "pagePath": "pages/elderly/home/index",
+        "text": "首页",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home-active.png"
+      },
+      {
+        "pagePath": "pages/message/index",
+        "text": "消息",
+        "iconPath": "images/message.png",
+        "selectedIconPath": "images/message-active.png"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我的",
+        "iconPath": "images/profile.png",
+        "selectedIconPath": "images/profile-active.png"
+      }
+    ]
+  },
+  "usingComponents": {
+    "elderly-form": "/components/elderly-form/index",
+    "health-record-form": "/components/health-record-form/index",
+    "activity-form": "/components/activity-form/index"
+  }
+} 

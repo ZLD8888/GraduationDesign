@@ -1,0 +1,31 @@
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <input type="text" placeholder="搜索老人姓名" bindinput="handleSearchInput" />
+    <button class="search-btn" bindtap="handleSearch">搜索</button>
+  </view>
+
+  <!-- 老人信息列表 -->
+  <view class="elderly-list">
+    <view wx:if="{{elderlyList.length === 0}}" class="no-elderly">
+      <text>暂无老人信息</text>
+    </view>
+    <view class="elderly-item" wx:for="{{elderlyList}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
+      <view class="elderly-info">
+        <view class="elderly-name">{{item.name}}</view>
+        <view class="elderly-details">
+          <text>床位号：{{item.bedNumber}}</text>
+          <text>性别：{{item.gender}}</text>
+        </view>
+      </view>
+      <view class="elderly-status">
+        <text class="health-status">{{item.healthCondition}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 添加按钮 -->
+  <view class="add-btn" wx:if="{{isStaffOrAdmin}}" bindtap="goToAdd">
+    <text class="add-icon">+</text>
+  </view>
+</view> 

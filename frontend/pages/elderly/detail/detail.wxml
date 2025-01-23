@@ -1,0 +1,73 @@
+<view class="container">
+  <view class="detail-card">
+    <!-- 基本信息 -->
+    <view class="section">
+      <view class="section-title">基本信息</view>
+      <view class="info-item">
+        <text class="label">姓名：</text>
+        <text class="value">{{elderlyInfo.name}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">性别：</text>
+        <text class="value">{{elderlyInfo.gender}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">出生日期：</text>
+        <text class="value">{{elderlyInfo.birthDate}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">身份证号：</text>
+        <text class="value">{{elderlyInfo.idCard}}</text>
+      </view>
+    </view>
+
+    <!-- 住院信息 -->
+    <view class="section">
+      <view class="section-title">住院信息</view>
+      <view class="info-item">
+        <text class="label">床位号：</text>
+        <text class="value">{{elderlyInfo.bedNumber}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">入院日期：</text>
+        <text class="value">{{elderlyInfo.checkInDate}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">护工姓名：</text>
+        <text class="value">{{elderlyInfo.caregiver.name}}</text>
+      </view>
+    </view>
+
+    <!-- 健康状况 -->
+    <view class="section">
+      <view class="section-title">健康状况</view>
+      <view class="info-item">
+        <text class="label">健康状况：</text>
+        <text class="value">{{elderlyInfo.healthCondition}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">饮食限制：</text>
+        <text class="value">{{elderlyInfo.dietaryRestrictions}}</text>
+      </view>
+    </view>
+
+    <!-- 紧急联系人 -->
+    <view class="section">
+      <view class="section-title">紧急联系人</view>
+      <view class="info-item">
+        <text class="label">姓名：</text>
+        <text class="value">{{elderlyInfo.emergencyContactName}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">电话：</text>
+        <text class="value">{{elderlyInfo.emergencyContactPhone}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-buttons" wx:if="{{isStaffOrAdmin}}">
+    <button class="btn-edit" bindtap="handleEdit">编辑信息</button>
+    <button class="btn-delete" bindtap="handleDelete">删除信息</button>
+  </view>
+</view> 

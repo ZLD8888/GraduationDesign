@@ -1,0 +1,4 @@
+<activity-form 
+  submit-text="创建活动" 
+  bind:submit="handleSubmit">
+</activity-form> 

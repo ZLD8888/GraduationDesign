@@ -1,0 +1,1 @@
+<elderly-form submit-text="添加" bind:submit="handleSubmit"></elderly-form> 

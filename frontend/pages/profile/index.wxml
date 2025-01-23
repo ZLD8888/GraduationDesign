@@ -1,0 +1,74 @@
+<view class="container">
+  <!-- 用户信息卡片 -->
+  <view class="user-card">
+    <view class="avatar-wrapper">
+      <image class="avatar" src="{{userInfo.avatar || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+    </view>
+    <view class="user-info">
+      <text class="username">{{userInfo.name}}</text>
+      <text class="role">{{roleMap[userInfo.role]}}</text>
+    </view>
+  </view>
+
+  <!-- 功能列表 -->
+  <view class="function-list">
+    <!-- 工作人员功能 -->
+    <block wx:if="{{userInfo.role === 'STAFF'}}">
+      <navigator url="/pages/elderly/list/index" class="function-item">
+        <image class="icon" src="/images/elderly-manage.png" mode="aspectFit"></image>
+        <text class="text">老人管理</text>
+        <text class="arrow">></text>
+      </navigator>
+      <navigator url="/pages/elderly/activities/list" class="function-item">
+        <image class="icon" src="/images/activity-manage.png" mode="aspectFit"></image>
+        <text class="text">活动管理</text>
+        <text class="arrow">></text>
+      </navigator>
+    </block>
+
+    <!-- 家属功能 -->
+    <block wx:if="{{userInfo.role === 'FAMILY'}}">
+      <navigator url="/pages/elderly/detail/index" class="function-item">
+        <image class="icon" src="/images/elderly-info.png" mode="aspectFit"></image>
+        <text class="text">老人信息</text>
+        <text class="arrow">></text>
+      </navigator>
+      <navigator url="/pages/elderly/health/list" class="function-item">
+        <image class="icon" src="/images/health-record.png" mode="aspectFit"></image>
+        <text class="text">健康记录</text>
+        <text class="arrow">></text>
+      </navigator>
+    </block>
+
+    <!-- 老人功能 -->
+    <block wx:if="{{userInfo.role === 'ELDERLY'}}">
+      <navigator url="/pages/elderly/health/self" class="function-item">
+        <image class="icon" src="/images/health-record.png" mode="aspectFit"></image>
+        <text class="text">我的健康记录</text>
+        <text class="arrow">></text>
+      </navigator>
+      <navigator url="/pages/service/my" class="function-item">
+        <image class="icon" src="/images/service.png" mode="aspectFit"></image>
+        <text class="text">我的服务</text>
+        <text class="arrow">></text>
+      </navigator>
+    </block>
+
+    <!-- 通用功能 -->
+    <view class="function-item" bindtap="handleChangePassword">
+      <image class="icon" src="/images/password.png" mode="aspectFit"></image>
+      <text class="text">修改密码</text>
+      <text class="arrow">></text>
+    </view>
+    <view class="function-item" bindtap="handleAbout">
+      <image class="icon" src="/images/about.png" mode="aspectFit"></image>
+      <text class="text">关于我们</text>
+      <text class="arrow">></text>
+    </view>
+  </view>
+
+  <!-- 退出登录按钮 -->
+  <view class="logout-section">
+    <button class="logout-btn" bindtap="handleLogout">退出登录</button>
+  </view>
+</view> 

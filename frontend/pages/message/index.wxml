@@ -1,0 +1,35 @@
+<view class="container">
+  <!-- 消息类型切换 -->
+  <view class="message-tabs">
+    <view 
+      wx:for="{{messageTypes}}" 
+      wx:key="value"
+      class="tab-item {{currentType === item.value ? 'active' : ''}}"
+      bindtap="handleTypeChange"
+      data-type="{{item.value}}">
+      {{item.label}}
+    </view>
+  </view>
+
+  <!-- 消息列表 -->
+  <view class="message-list">
+    <view class="message-item {{item.isRead ? 'read' : ''}}" 
+          wx:for="{{messages}}" 
+          wx:key="id" 
+          bindtap="handleMessageClick" 
+          data-id="{{item.id}}">
+      <view class="message-dot" wx:if="{{!item.isRead}}"></view>
+      <view class="message-content">
+        <view class="message-title">{{item.title}}</view>
+        <view class="message-brief">{{item.content}}</view>
+        <view class="message-time">{{item.createTime}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{messages.length === 0}}">
+    <image src="/images/empty-message.png" mode="aspectFit"></image>
+    <text>暂无消息</text>
+  </view>
+</view> 

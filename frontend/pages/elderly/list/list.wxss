@@ -1,0 +1,96 @@
+.container {
+  padding: 20rpx;
+}
+
+.search-bar {
+  display: flex;
+  margin-bottom: 20rpx;
+}
+
+.search-bar input {
+  flex: 1;
+  height: 80rpx;
+  padding: 0 20rpx;
+  border: 1px solid #ddd;
+  border-radius: 8rpx;
+  margin-right: 20rpx;
+}
+
+.search-btn {
+  width: 160rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  background: #1296db;
+  color: #fff;
+  border-radius: 8rpx;
+}
+
+.elderly-list {
+  margin-top: 20rpx;
+}
+
+.elderly-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx;
+  background: #fff;
+  margin-bottom: 20rpx;
+  border-radius: 8rpx;
+}
+
+.elderly-info {
+  flex: 1;
+}
+
+.elderly-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.elderly-details {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.elderly-details text {
+  margin-right: 20rpx;
+}
+
+.elderly-status {
+  padding: 10rpx 20rpx;
+  background: #f8f8f8;
+  border-radius: 4rpx;
+}
+
+.health-status {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.add-btn {
+  position: fixed;
+  right: 40rpx;
+  bottom: 40rpx;
+  width: 100rpx;
+  height: 100rpx;
+  background: #1296db;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.add-icon {
+  color: #fff;
+  font-size: 48rpx;
+}
+
+.no-elderly {
+  text-align: center;
+  color: #999;
+  padding: 20rpx;
+} 

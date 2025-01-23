@@ -1,0 +1,38 @@
+<view class="container">
+  <view class="grid-container">
+    <navigator url="/pages/family/elderly/info/index" class="grid-item">
+      <image src="/images/elderly-info.png" mode="aspectFit"></image>
+      <text>家属账号绑定老人信息</text>
+    </navigator>
+
+    <navigator url="/pages/family/activities/list" class="grid-item">
+      <image src="/images/activity.png" mode="aspectFit"></image>
+      <text>近期活动</text>
+    </navigator>
+
+    <navigator url="/pages/family/service/appointment/index" class="grid-item">
+      <image src="/images/service.png" mode="aspectFit"></image>
+      <text>服务预约</text>
+    </navigator>
+
+    <navigator url="/pages/family/elderly/health/monitor" class="grid-item">
+      <image src="/images/health.png" mode="aspectFit"></image>
+      <text>老人健康监控</text>
+    </navigator>
+  </view>
+
+  <view class="recent-section">
+    <view class="section-header">
+      <text class="title">近期老人活动以及服务</text>
+    </view>
+    <view class="list">
+      <view class="item" wx:for="{{recentItems}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}" data-type="{{item.type}}">
+        <view class="item-main">
+          <text class="item-title">{{item.title}}</text>
+          <text class="item-time">{{item.time}}</text>
+        </view>
+        <text class="item-status {{item.status}}">{{item.statusText}}</text>
+      </view>
+    </view>
+  </view>
+</view> 

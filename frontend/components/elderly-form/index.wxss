@@ -1,0 +1,66 @@
+.form-container {
+  padding: 20rpx;
+}
+
+.section {
+  background: #fff;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+  padding-bottom: 10rpx;
+  border-bottom: 1px solid #eee;
+}
+
+.form-item {
+  margin-bottom: 20rpx;
+}
+
+.label {
+  display: block;
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+
+input, .picker {
+  width: 100%;
+  height: 80rpx;
+  border: 1px solid #ddd;
+  border-radius: 8rpx;
+  padding: 0 20rpx;
+  box-sizing: border-box;
+  font-size: 28rpx;
+}
+
+textarea {
+  width: 100%;
+  height: 160rpx;
+  border: 1px solid #ddd;
+  border-radius: 8rpx;
+  padding: 20rpx;
+  box-sizing: border-box;
+  font-size: 28rpx;
+}
+
+.submit-btn {
+  margin-top: 40rpx;
+  background: #1296db;
+  color: #fff;
+  border-radius: 8rpx;
+  font-size: 32rpx;
+}
+
+.centered-picker {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 10rpx;
+  box-sizing: border-box;
+} 

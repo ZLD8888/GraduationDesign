@@ -1,0 +1,43 @@
+<view class="form-container">
+  <form bindsubmit="handleSubmit">
+    <view class="section">
+      <view class="form-item">
+        <text class="label">记录时间</text>
+        <picker mode="date" name="recordTime" value="{{formData.recordTime}}" bindchange="handleDateChange">
+          <view class="picker">{{formData.recordTime || '请选择记录时间'}}</view>
+        </picker>
+      </view>
+
+      <view class="form-item">
+        <text class="label">体温 (℃)</text>
+        <input type="digit" name="temperature" value="{{formData.temperature}}" placeholder="请输入体温" />
+      </view>
+
+      <view class="form-item">
+        <text class="label">血压 (mmHg)</text>
+        <view class="blood-pressure">
+          <input type="number" name="bloodPressureSystolic" value="{{formData.bloodPressureSystolic}}" placeholder="收缩压" />
+          <text class="separator">/</text>
+          <input type="number" name="bloodPressureDiastolic" value="{{formData.bloodPressureDiastolic}}" placeholder="舒张压" />
+        </view>
+      </view>
+
+      <view class="form-item">
+        <text class="label">心率 (次/分)</text>
+        <input type="number" name="heartRate" value="{{formData.heartRate}}" placeholder="请输入心率" />
+      </view>
+
+      <view class="form-item">
+        <text class="label">血糖 (mmol/L)</text>
+        <input type="digit" name="bloodSugar" value="{{formData.bloodSugar}}" placeholder="请输入血糖" />
+      </view>
+
+      <view class="form-item">
+        <text class="label">备注</text>
+        <textarea name="note" value="{{formData.note}}" placeholder="请输入备注信息" />
+      </view>
+    </view>
+
+    <button class="submit-btn" form-type="submit">{{submitText}}</button>
+  </form>
+</view> 

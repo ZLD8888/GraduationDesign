@@ -1,0 +1,5 @@
+<activity-form 
+  submit-text="保存修改" 
+  formData="{{formData}}"
+  bind:submit="handleSubmit">
+</activity-form> 

@@ -1,0 +1,51 @@
+<view class="container">
+  <view class="search-bar">
+    <input type="text" placeholder="搜索" bindinput="handleSearch" />
+  </view>
+
+  <view class="grid-container">
+    <navigator url="/pages/elderly/list/list" class="grid-item">
+      <image src="/images/elderly-info.png" mode="aspectFit"></image>
+      <text>老人信息管理</text>
+    </navigator>
+
+    <navigator url="/pages/staff/activities/list" class="grid-item"> 
+      <image src="/images/activity.png" mode="aspectFit"></image>
+      <text>活动信息管理</text>
+    </navigator>
+<!-- 暂时没有此页面 -->
+    <navigator url="/pages/appointment/list/index" class="grid-item">
+      <image src="/images/appointment.png" mode="aspectFit"></image>
+      <text>预约信息管理</text>
+    </navigator>
+<!-- 暂时没有此页面 -->
+    <navigator url="/pages/health/monitor/index" class="grid-item">
+      <image src="/images/health.png" mode="aspectFit"></image>
+      <text>监看老人健康监控</text>
+    </navigator>
+<!-- 暂时没有此页面 -->
+    <navigator url="/pages/service/list/index" class="grid-item"> 
+      <image src="/images/service.png" mode="aspectFit"></image>
+      <text>服务预约管理</text>
+    </navigator>
+  </view>
+
+  <view class="recent-section">
+    <view class="section-header">
+      <text class="title">近期活动</text>
+      <text class="more" bindtap="viewMore">查看更多</text>
+    </view>
+    <view class="list">
+      <view wx:if="{{recentItems.length === 0}}" class="no-activity">
+            <text>最近没有活动</text> <!-- 提示信息 -->
+        </view>
+      <view class="item" wx:for="{{recentItems}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}" data-type="{{item.activityStatus}}">
+        <view class="item-main">
+          <text class="item-title">{{item.name}}</text>
+          <text class="item-time">{{item.startTime}}</text>
+        </view>
+        <text class="item-status {{item.activityStatus}}">{{item.description}}</text>
+      </view>
+    </view>
+  </view>
+</view> 

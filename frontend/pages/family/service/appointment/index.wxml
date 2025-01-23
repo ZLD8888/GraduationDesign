@@ -1,0 +1,4 @@
+<view class="container">
+  <view class="title">服务预约</view>
+  <!-- 这里可以添加服务预约的表单或列表 -->
+</view> 

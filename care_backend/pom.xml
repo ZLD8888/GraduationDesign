@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 定义项目的POM（Project Object Model）版本为4.0.0 -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- 定义POM模型的版本为4.0.0 -->
+    <modelVersion>4.0.0</modelVersion>
+    <!-- 定义项目的父POM，这里使用的是Spring Boot的starter parent -->
+    <parent>
+        <!-- 父POM的groupId，这里是Spring Boot的组织ID -->
+        <groupId>org.springframework.boot</groupId>
+        <!-- 父POM的artifactId，这里是Spring Boot的starter parent -->
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <!-- 父POM的版本号，这里是3.4.1 -->
+        <version>3.4.1</version>
+        <!-- 相对路径，这里为空表示从仓库中查找父POM -->
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <!-- 定义项目的groupId，这里是自定义的组织ID -->
+    <groupId>com.zzxy</groupId>
+    <!-- 定义项目的artifactId，这里是care_backend -->
+    <artifactId>care_backend</artifactId>
+    <!-- 定义项目的版本号，这里是0.0.1-SNAPSHOT -->
+    <version>0.0.1-SNAPSHOT</version>
+    <!-- 定义项目的名称，这里是care_backend -->
+    <name>care_backend</name>
+    <!-- 定义项目的描述，这里是care_backend -->
+    <description>care_backend</description>
+    <!-- 定义项目的URL，这里为空 -->
+    <url/>
+    <!-- 定义项目的许可证，这里为空 -->
+    <licenses>
+        <license/>
+    </licenses>
+    <!-- 定义项目的开发者，这里为空 -->
+    <developers>
+        <developer/>
+    </developers>
+    <!-- 定义项目的SCM（Source Control Management）配置，这里为空 -->
+    <scm>
+        <connection/>
+        <developerConnection/>
+        <tag/>
+        <url/>
+    </scm>
+    <!-- 定义项目的属性，这里定义了Java版本为17 -->
+    <properties>
+        <java.version>17</java.version>
+    </properties>
+    <!-- 定义项目的依赖 -->
+    <dependencies>
+        <!-- 添加Spring Boot Web依赖，用于构建Web应用 -->
+        <dependency>
+            <!-- 依赖的groupId，这里是Spring Boot的组织ID -->
+            <groupId>org.springframework.boot</groupId>
+            <!-- 依赖的artifactId，这里是spring-boot-starter-web -->
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- 添加MyBatis Spring Boot Starter依赖，用于集成MyBatis -->
+        <dependency>
+            <!-- 依赖的groupId，这里是MyBatis的组织ID -->
+            <groupId>org.mybatis.spring.boot</groupId>
+            <!-- 依赖的artifactId，这里是mybatis-spring-boot-starter -->
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <!-- 依赖的版本号，这里是3.0.4 -->
+            <version>3.0.4</version>
+        </dependency>
+        <!-- 添加MySQL Connector/J依赖，用于连接MySQL数据库 -->
+        <dependency>
+            <!-- 依赖的groupId，这里是MySQL的组织ID -->
+            <groupId>com.mysql</groupId>
+            <!-- 依赖的artifactId，这里是mysql-connector-j -->
+            <artifactId>mysql-connector-j</artifactId>
+            <!-- 依赖的作用域，这里是运行时 -->
+            <scope>runtime</scope>
+        </dependency>
+        <!-- 添加Lombok依赖，用于简化Java代码 -->
+        <dependency>
+            <!-- 依赖的groupId，这里是Project Lombok的组织ID -->
+            <groupId>org.projectlombok</groupId>
+            <!-- 依赖的artifactId，这里是lombok -->
+            <artifactId>lombok</artifactId>
+            <version>1.18.24</version>
+            <!-- 依赖的作用域，这里是provided -->
+            <scope>provided</scope>
+            <!-- 依赖的可选性，这里设置为true -->
+<!--            <optional>true</optional>-->
+        </dependency>
+        <!-- 添加Spring Boot Test依赖，用于单元测试 -->
+        <dependency>
+            <!-- 依赖的groupId，这里是Spring Boot的组织ID -->
+            <groupId>org.springframework.boot</groupId>
+            <!-- 依赖的artifactId，这里是spring-boot-starter-test -->
+            <artifactId>spring-boot-starter-test</artifactId>
+            <!-- 依赖的作用域，这里是测试 -->
+            <scope>test</scope>
+        </dependency>
+        <!-- 添加MyBatis Spring Boot Starter Test依赖，用于MyBatis的单元测试 -->
+        <dependency>
+            <!-- 依赖的groupId，这里是MyBatis的组织ID -->
+            <groupId>org.mybatis.spring.boot</groupId>
+            <!-- 依赖的artifactId，这里是mybatis-spring-boot-starter-test -->
+            <artifactId>mybatis-spring-boot-starter-test</artifactId>
+            <!-- 依赖的版本号，这里是3.0.4 -->
+            <version>3.0.4</version>
+            <!-- 依赖的作用域，这里是测试 -->
+            <scope>test</scope>
+        </dependency>
+        <!-- JWT -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>0.11.5</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>0.11.5</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>0.11.5</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Spring Security 依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!-- Spring Security Web 依赖 -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+        </dependency>
+
+        <!-- Spring Security Config 依赖 -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+        </dependency>
+
+        <!-- JWT 依赖 -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.4.32.Final</version> <!-- 使用最新版本 -->
+        </dependency>
+    </dependencies>
+    <!-- 定义项目的构建配置 -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.10.1</version>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.24</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

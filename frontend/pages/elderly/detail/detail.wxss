@@ -1,0 +1,65 @@
+.container {
+  padding: 20rpx;
+}
+
+.detail-card {
+  background: #fff;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.section {
+  margin-bottom: 30rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+  padding-bottom: 10rpx;
+  border-bottom: 1px solid #eee;
+}
+
+.info-item {
+  display: flex;
+  margin-bottom: 16rpx;
+}
+
+.label {
+  width: 180rpx;
+  color: #666;
+  font-size: 28rpx;
+}
+
+.value {
+  flex: 1;
+  color: #333;
+  font-size: 28rpx;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 20rpx;
+}
+
+.btn-edit, .btn-delete {
+  width: 45%;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+}
+
+.btn-edit {
+  background: #1296db;
+  color: #fff;
+}
+
+.btn-delete {
+  background: #ff4d4f;
+  color: #fff;
+} 

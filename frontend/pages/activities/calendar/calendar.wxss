@@ -1,0 +1,115 @@
+.container {
+  padding: 20rpx;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx;
+  background: #fff;
+  border-radius: 8rpx;
+  margin-bottom: 20rpx;
+}
+
+.arrow {
+  padding: 10rpx 20rpx;
+  color: #1296db;
+}
+
+.current-month {
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  background: #fff;
+  padding: 20rpx 0;
+  font-size: 28rpx;
+  color: #666;
+  border-radius: 8rpx;
+  margin-bottom: 20rpx;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2rpx;
+  background: #eee;
+  border-radius: 8rpx;
+  overflow: hidden;
+}
+
+.day {
+  background: #fff;
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  font-size: 28rpx;
+}
+
+.other-month {
+  color: #ccc;
+}
+
+.has-activity {
+  font-weight: bold;
+}
+
+.activity-dot {
+  width: 8rpx;
+  height: 8rpx;
+  background: #1296db;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 10rpx;
+}
+
+.activities-panel {
+  margin-top: 20rpx;
+  background: #fff;
+  border-radius: 8rpx;
+  padding: 20rpx;
+}
+
+.panel-header {
+  padding-bottom: 20rpx;
+  border-bottom: 1px solid #eee;
+}
+
+.selected-date {
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.activity-list {
+  margin-top: 20rpx;
+}
+
+.activity-item {
+  padding: 20rpx;
+  border-bottom: 1px solid #eee;
+}
+
+.activity-time {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+
+.activity-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.activity-location {
+  font-size: 24rpx;
+  color: #999;
+} 

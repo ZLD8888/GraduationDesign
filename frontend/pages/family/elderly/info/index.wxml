@@ -1,0 +1,5 @@
+<view class="container">
+  <view class="title">家属账号绑定老人信息</view>
+  <!-- 这里可以添加绑定老人信息的表单或列表 -->
+   <view class="btn-primary">绑定老人信息</view>
+</view> 
