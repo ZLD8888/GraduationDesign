@@ -39,6 +39,8 @@ public class AuthServiceImpl implements AuthService {
     public int findByPhone(String phone) {
         return authMapper.findByPhone(phone);
     }
+
+
     @Override
     public void register(RegisterDto registerDto) {
         logger.info("注册信息:{}",registerDto);

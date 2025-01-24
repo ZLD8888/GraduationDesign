@@ -14,7 +14,7 @@ public class Elderly {
     private String idCard; // 身份证号
     private String bedNumber; // 床位号
     private String checkInDate; // 入住日期
-    private String caregiverId; // 护工ID
+    private Integer caregiverId; // 护工ID
     private String healthCondition; // 健康状况
     private String dietaryRestrictions; // 饮食限制
     private String emergencyContactName; // 紧急联系人姓名

@@ -13,6 +13,7 @@
     "pages/activities/calendar/calendar",
     "pages/message/index",
     "pages/profile/index",
+    "pages/profile/change-password/index",
     "pages/elderly/list/list",
     "pages/elderly/add/add",
     "pages/elderly/detail/detail",

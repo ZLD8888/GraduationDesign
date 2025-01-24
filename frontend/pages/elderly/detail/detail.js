@@ -15,7 +15,8 @@ Page({
   checkUserRole() {
     const userRole = wx.getStorageSync('userRole');
     this.setData({
-      isStaffOrAdmin: userRole === 'ADMIN' || userRole === 'STAFF'
+      // isStaffOrAdmin: userRole === 'ADMIN' || userRole === 'STAFF'
+      isStaffOrAdmin: userRole === 'ADMIN'
     });
   },
 
@@ -29,7 +30,7 @@ Page({
       },
       success: (res) => {
         this.setData({
-          elderlyInfo: res.data
+          elderlyInfo: res.data.data
         });
       }
     });

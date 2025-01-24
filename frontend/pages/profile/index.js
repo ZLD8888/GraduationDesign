@@ -34,7 +34,7 @@ Page({
       },
       success: (res) => {
         this.setData({
-          userInfo: res.data
+          userInfo: res.data.data
         });
       }
     });

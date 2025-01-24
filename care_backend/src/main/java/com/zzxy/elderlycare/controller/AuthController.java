@@ -4,12 +4,10 @@ import com.zzxy.elderlycare.dto.RegisterDto;
 import com.zzxy.elderlycare.dto.UserLoginDto;
 import com.zzxy.elderlycare.entity.Result;
 import com.zzxy.elderlycare.service.AuthService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -28,7 +26,7 @@ public class AuthController {
         if (userLoginDto.getPhone() == null || userLoginDto.getPassword() == null) {
             throw new RuntimeException("手机号或密码不能为空");
         }
-//        if (userLoginDto.getPhone().length() != 11) {
+//        if (userLoginDto.getPhone().length() != 11 && userLoginDto.getPhone().length() != 18) {
 //            throw new RuntimeException("手机号格式错误");
 //        }
         if (userLoginDto.getPassword().length() < 6 || userLoginDto.getPassword().length() > 16) {
@@ -57,4 +55,5 @@ public class AuthController {
         authService.register(registerDto);
         return Result.success("200","注册成功");
     }
+
 }

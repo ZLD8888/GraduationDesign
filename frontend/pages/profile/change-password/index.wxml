@@ -1,0 +1,18 @@
+<view class="container">
+  <view class="title">修改密码</view>
+  <form bindsubmit="handleChangePassword">
+    <view class="input-group">
+      <input type="password" name="oldPassword" placeholder="请输入旧密码" required bindinput="handleInput" data-name="oldPassword" 
+      style="background-image: url('/images/password.png'); background-size: 20px; background-position: 10px center; background-repeat: no-repeat; padding-left: 40px;"/>
+    </view>
+    <view class="input-group">
+      <input type="password" name="newPassword" placeholder="请输入新密码" required bindinput="handleInput" data-name="newPassword" 
+      style="background-image: url('/images/password.png'); background-size: 20px; background-position: 10px center; background-repeat: no-repeat; padding-left: 40px;"/>
+    </view>
+    <view class="input-group">
+      <input type="password" name="confirmPassword" placeholder="确认新密码" required bindinput="handleInput" data-name="confirmPassword" 
+      style="background-image: url('/images/password.png'); background-size: 20px; background-position: 10px center; background-repeat: no-repeat; padding-left: 40px;"/>
+    </view>
+    <button class="btn-primary" form-type="submit">提交</button>
+  </form>
+</view> 

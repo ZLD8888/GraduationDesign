@@ -1,5 +1,6 @@
 package com.zzxy.elderlycare.service.impl;
 
+import com.zzxy.elderlycare.dto.ChangePassword;
 import com.zzxy.elderlycare.entity.User;
 import com.zzxy.elderlycare.exception.ServiceException;
 import com.zzxy.elderlycare.mapper.UserMapper;
@@ -14,6 +15,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +40,28 @@ public class UserServiceImpl implements UserSersive, UserDetailsService {
             throw new ServiceException("403", "当前用户不存在");
         }
         return dbcurrent;
+    }
+
+    @Override
+    public List<User> getCaregivers() {
+        List<User> dbcaregivers = userMapper.getCaregivers();
+        return dbcaregivers;
+    }
+
+    @Override
+    public void changePassword(Integer id, ChangePassword changePassword) {
+        logger.info("id:{}", id);
+        logger.info("changePassword:{}", changePassword);
+        User dbuser = userMapper.getUserById(id);
+        logger.info("dbuser:{}", dbuser);
+        if (dbuser == null) {
+            throw new ServiceException("403", "用户不存在");
+        }
+        if (!dbuser.getPassword().equals(changePassword.getOldPassword())) {
+            throw new ServiceException("403", "原密码错误");
+        }
+        userMapper.changePassword(id, changePassword.getNewPassword());
+
     }
 
     @Override

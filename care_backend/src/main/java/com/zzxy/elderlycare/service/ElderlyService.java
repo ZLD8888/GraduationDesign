@@ -6,4 +6,13 @@ import java.util.List;
 
 public interface ElderlyService {
     List<Elderly> allelederlyInfo();
+
+    //老人注册
+    void oldManregister(Elderly elderly);
+    void addElderly(Elderly elderly);
+
+    Elderly getElderlyById(Integer id);
+
+    void deleteElderlyById(Integer id);
+
 }

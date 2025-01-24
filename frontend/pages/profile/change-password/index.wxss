@@ -1,0 +1,36 @@
+.container {
+  padding: 20rpx;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.input-group {
+  margin-bottom: 20rpx;
+}
+
+.input-group input {
+  width: 100%;
+  height: 88rpx;
+  border: 1px solid #ddd;
+  border-radius: 8rpx;
+  padding: 0 20rpx;
+  box-sizing: border-box;
+}
+
+.btn-primary {
+  width: 100%;
+  height: 88rpx;
+  background: #1296db;
+  color: #fff;
+  border-radius: 8rpx;
+  text-align: center;
+  line-height: 88rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} 

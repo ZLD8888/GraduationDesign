@@ -9,4 +9,5 @@ public interface AuthService {
     void register(RegisterDto registerDto);
 
     int findByPhone(String phone);
+
 }

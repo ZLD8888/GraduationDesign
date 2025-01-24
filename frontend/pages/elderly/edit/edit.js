@@ -20,7 +20,7 @@ Page({
       },
       success: (res) => {
         this.setData({
-          formData: res.data
+          formData: res.data.data
         });
       }
     });
