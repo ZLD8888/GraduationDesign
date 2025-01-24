@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # GraduationDesign
 
 #### 介绍
@@ -30,13 +29,6 @@
 
 #### 特技
 
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
-=======
 # 主要面向用户（托老院工作人员、家属、老年人等角色），提供易用的操作界面和功能模块。
 
 ## （1）前端功能设计
@@ -75,4 +67,3 @@
 5）家属与托老院互动模块：主要包括实时消息推送功能接口、服务反馈接口、查看老人信息功能接口等功能接口。
 6）服务预约与管理模块：主要包括家属或老人预约接口、工作人员确认预约并分配相关资源接口、查看预约历史接口。
 7）紧急情况通知模块：包括报警接口、预设紧急联系电话接口。
->>>>>>> c2fb3f6 (第一次提交)
