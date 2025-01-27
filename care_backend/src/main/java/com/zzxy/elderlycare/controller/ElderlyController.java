@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Slf4j
@@ -51,10 +52,36 @@ public class ElderlyController {
         return Result.success("200","成功",elderly);
     }
 
+    /**
+     * @param id  老人id
+     * @return   结果
+     * @description 根据id删除老人信息
+     */
     @DeleteMapping("/{id}")
     public Result deleteElderlyById(@PathVariable Integer id){
         log.info("删除老人信息:{}",id);
         elderlyService.deleteElderlyById(id);
         return Result.success("200","成功");
+    }
+
+    @Transactional
+    @PutMapping("/{id}")
+    public Result updateElderlyInfo(@PathVariable Integer id ,@RequestBody Elderly elderly){
+        log.info("修改老人信息:{}",elderly);
+        Elderly elderlyById = elderlyService.getElderlyById(id);
+        if (elderlyById == null){
+            return Result.error("404","该老人不存在");
+        }
+        log.info("查出来的老人信息：{}",elderlyById);
+        if(!elderly.getIdCard().equals(elderlyById.getIdCard())){
+            log.info("修改老人手机号");
+            elderlyService.updateUserPhone(elderlyById.getIdCard(),elderly.getIdCard());
+        }
+        if(elderly.getCaregiverId() == null || !elderly.getCaregiverId().equals(elderlyById.getCaregiverId())){
+            log.info("修改护工id");
+            elderlyService.updateStaffId(elderlyById.getCaregiverId(), elderly.getCaregiverId());
+        }
+        elderlyService.updateElderlyInfo(id,elderly);
+        return null;
     }
 }

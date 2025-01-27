@@ -2,11 +2,17 @@ const app = getApp()
 
 Page({
   data: {
-    formData: {}
+    formData: {},
+    userId: null
   },
 
   onLoad(options) {
     const id = options.id;
+    // 从本地存储中获取用户ID
+    const userId = wx.getStorageSync('userId');
+    this.setData({
+      userId: userId
+    });
     this.loadActivity(id);
   },
 
@@ -20,18 +26,43 @@ Page({
       },
       success: (res) => {
         const activity = res.data.data;
-        // 处理日期时间格式
-        const startDateTime = new Date(activity.startTime);
-        const endDateTime = new Date(activity.endTime);
-        
-        this.setData({
-          formData: {
-            ...activity,
+        if (activity) {
+          // 处理日期时间格式
+          const startDateTime = new Date(activity.startTime);
+          const endDateTime = new Date(activity.endTime);
+          
+          // 打印活动状态，用于调试
+          console.log('Activity data from server:', activity);
+          console.log('Activity status from server:', activity.activityStatus);
+          
+          const formData = {
+            id: activity.id,
+            name: activity.name,
+            description: activity.description,
+            location: activity.location,
+            maxParticipants: activity.maxParticipants,
+            activityStatus: activity.activityStatus, // 确保状态被正确设置
             startDate: this.formatDateTime(startDateTime),
             startTime: startDateTime.toTimeString().slice(0, 5),
             endDate: this.formatDateTime(endDateTime),
-            endTime: endDateTime.toTimeString().slice(0, 5)
-          }
+            endTime: endDateTime.toTimeString().slice(0, 5),
+            organizerId: activity.organizerId
+          };
+          
+          console.log('Setting form data with status:', formData.activityStatus);
+          
+          this.setData({ formData });
+        } else {
+          wx.showToast({
+            title: '加载活动信息失败',
+            icon: 'none'
+          });
+        }
+      },
+      fail: () => {
+        wx.showToast({
+          title: '加载活动信息失败',
+          icon: 'none'
         });
       }
     });
@@ -49,6 +80,8 @@ Page({
 
   handleSubmit(e) {
     const formData = e.detail;
+    // 添加组织者ID
+    formData.organizerId = this.data.userId;
     const token = wx.getStorageSync('token');
     
     wx.request({

@@ -14,14 +14,33 @@ Page({
       },
       data: formData,
       success: (res) => {
+        if (res.statusCode === 200) {
+          wx.showToast({
+            title: '添加成功',
+            icon: 'success',
+            duration: 2000
+          });
+          
+          setTimeout(() => {
+            const pages = getCurrentPages();
+            const prevPage = pages[pages.length - 2];
+            
+            wx.navigateBack({
+              delta: 1
+            });
+          }, 2000);
+        } else {
+          wx.showToast({
+            title: '添加失败',
+            icon: 'none'
+          });
+        }
+      },
+      fail: () => {
         wx.showToast({
-          title: '添加成功',
-          icon: 'success',
-          duration: 2000
+          title: '请求失败，请重试',
+          icon: 'none'
         });
-        setTimeout(() => {
-          wx.navigateBack();
-        }, 2000);
       }
     });
   }

@@ -16,6 +16,7 @@ public class Activity {
     private Integer currentParticipants;
     private String activityStatus;
     private Integer organizerId;
+    private String organizerName;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

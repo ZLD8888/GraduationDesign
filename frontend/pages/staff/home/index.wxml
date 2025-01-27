@@ -9,7 +9,7 @@
       <text>老人信息管理</text>
     </navigator>
 
-    <navigator url="/pages/staff/activities/list" class="grid-item"> 
+    <navigator url="/pages/admin/activities/list" class="grid-item"> 
       <image src="/images/activity.png" mode="aspectFit"></image>
       <text>活动信息管理</text>
     </navigator>

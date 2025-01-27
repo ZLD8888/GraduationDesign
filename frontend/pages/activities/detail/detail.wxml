@@ -2,17 +2,18 @@
   <view class="detail-card">
     <view class="activity-header">
       <text class="activity-name">{{activity.name}}</text>
+      <!-- <text class="activity-status-debug" style="font-size: 12px; color: #999;">Debug: {{activity.status}}</text> -->
       <text class="activity-status status-{{activity.status.toLowerCase()}}">{{statusMap[activity.status]}}</text>
     </view>
 
     <view class="info-section">
       <view class="info-item">
         <text class="label">开始时间</text>
-        <text class="value">{{activity.startTime}}</text>
+        <text class="value">{{activity.displayStartTime}}</text>
       </view>
       <view class="info-item">
         <text class="label">结束时间</text>
-        <text class="value">{{activity.endTime}}</text>
+        <text class="value">{{activity.displayEndTime}}</text>
       </view>
       <view class="info-item">
         <text class="label">活动地点</text>
@@ -24,7 +25,7 @@
       </view>
       <view class="info-item">
         <text class="label">组织者</text>
-        <text class="value">{{activity.organizer.name}}</text>
+        <text class="value">{{activity.organizerName}}</text>
       </view>
     </view>
 
@@ -33,12 +34,17 @@
       <text class="description-content">{{activity.description}}</text>
     </view>
 
-    <view class="participants-section">
+    <view class="participants-section" wx:if="{{userRole === 'ADMIN' || userRole === 'STAFF'}}">
       <text class="section-title">参与人员</text>
-      <view class="participants-list">
-        <view class="participant-item" wx:for="{{activity.participants}}" wx:key="id">
-          <text>{{item.name}}</text>
+      <view wx:if="{{activity.participants.length > 0}}">
+        <view class="participants-list">
+          <view class="participant-item" wx:for="{{activity.participants}}" wx:key="id">
+            <text>{{item.name}}</text>
+          </view>
         </view>
+      </view>
+      <view wx:else>
+        <text class="no-participants" style="color: #888; font-size: 14px;">暂无参与人员</text>
       </view>
     </view>
   </view>
@@ -49,7 +55,7 @@
       <button class="btn-status" bindtap="showStatusActionSheet">更改状态</button>
       <button class="btn-delete" bindtap="handleDelete">删除活动</button>
     </block>
-    <block wx:else>
+    <block wx:elif="{{isElderly}}">
       <button class="btn-join" wx:if="{{!hasJoined}}" bindtap="handleJoin">报名参加</button>
       <button class="btn-quit" wx:else bindtap="handleQuit">取消报名</button>
     </block>

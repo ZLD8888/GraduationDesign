@@ -1,6 +1,6 @@
 package com.zzxy.elderlycare.controller;
 
-import com.zzxy.elderlycare.dto.ChangePassword;
+import com.zzxy.elderlycare.dto.ChangePasswordDto;
 import com.zzxy.elderlycare.entity.Result;
 import com.zzxy.elderlycare.entity.User;
 import com.zzxy.elderlycare.security.JwtAuthenticationFilter;
@@ -60,7 +60,7 @@ public class UserController {
     }
 
     @PostMapping("/change-password")
-    public Result changePassword(@RequestBody ChangePassword changePassword, HttpServletRequest request) {
+    public Result changePassword(@RequestBody ChangePasswordDto changePassword, HttpServletRequest request) {
         log.info("changePassword:{}", changePassword);
         log.info("request:{}", request);
         // 获取token
@@ -78,5 +78,14 @@ public class UserController {
             userSersive.changePassword(current.getId(),changePassword);
         }
         return Result.success("200","修改成功");
+    }
+
+    @GetMapping("/caregiver/{id}")
+    public Result getCaregiverById(@PathVariable Integer id) {
+        User caregiver = userSersive.getCaregiverById(id);
+        if(caregiver == null){
+            return Result.error("404", "护工不存在");
+        }
+        return Result.success("200", "成功", caregiver);
     }
 }

@@ -1,137 +1,66 @@
-const app = getApp()
-
+// pages/staff/activities/list.js
 Page({
+
+  /**
+   * 页面的初始数据
+   */
   data: {
-    currentStatus: 'PLANNED',
-    statusList: [
-      { label: '未开始', value: 'PLANNED' },
-      { label: '进行中', value: 'ONGOING' },
-      { label: '已结束', value: 'COMPLETED' },
-      { label: '已取消', value: 'CANCELLED' }
-    ],
-    statusMap: {
-      'PLANNED': '未开始',
-      'ONGOING': '进行中',
-      'COMPLETED': '已结束',
-      'CANCELLED': '已取消'
-    },
-    activities: [],
-    isStaff: false
+
   },
 
-  onLoad() {
-    this.checkUserRole();
-    this.loadActivities();
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad(options) {
+
   },
 
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
   onShow() {
-    this.loadActivities();
+
   },
 
-  checkUserRole() {
-    const userRole = wx.getStorageSync('userRole');
-    console.log("userRole:",userRole);
-    this.setData({
-      isStaff: userRole === 'ADMIN'
-    });
-    console.log("isStaff:",this.data.isStaff);
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide() {
+
   },
 
-  handleStatusChange(e) {
-    const status = e.currentTarget.dataset.status;
-    this.setData({
-      currentStatus: status
-    });
-    this.loadActivities();
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload() {
+
   },
 
-  loadActivities() {
-    const token = wx.getStorageSync('token');
-    wx.request({
-      url: `${app.globalData.baseUrl}/api/activity/status/${this.data.currentStatus}`,
-      method: 'GET',
-      header: {
-        'Authorization': `Bearer ${token}`
-      },
-      success: (res) => {
-        const activities = res.data.data.map(activity => ({
-          ...activity,
-          startTime: this.formatDateTime(activity.startTime),
-          endTime: this.formatDateTime(activity.endTime)
-        }));
-        this.setData({
-          activities: activities
-        });
-        console.log(res.data.data);
-      }
-    });
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh() {
+
   },
 
-  formatDateTime(dateTime) {
-    const date = new Date(dateTime);
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-    return `${year}年${month}月${day}日 ${hours}:${minutes}`;
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom() {
+
   },
 
-  goToDetail(e) {
-    const id = e.currentTarget.dataset.id;
-    wx.navigateTo({
-      url: `/pages/activities/detail/detail?id=${id}`
-    });
-  },
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage() {
 
-  goToEdit(e) {
-    const id = e.currentTarget.dataset.id;
-    wx.navigateTo({
-      url: `/pages/activities/edit/edit?id=${id}`
-    });
-  },
-
-  goToAdd() {
-    wx.navigateTo({
-      url: '/pages/activities/add/add'
-    });
-  },
-
-  goToCalendar() {
-    wx.navigateTo({
-      url: '/pages/activities/calendar/calendar'
-    });
-  },
-
-  handleDelete(e) {
-    const id = e.currentTarget.dataset.id;
-    wx.showModal({
-      title: '确认删除',
-      content: '确定要删除该活动吗？',
-      success: (res) => {
-        if (res.confirm) {
-          this.deleteActivity(id);
-        }
-      }
-    });
-  },
-
-  deleteActivity(id) {
-    const token = wx.getStorageSync('token');
-    wx.request({
-      url: `${app.globalData.baseUrl}/api/activity/${id}`,
-      method: 'DELETE',
-      header: {
-        'Authorization': `Bearer ${token}`
-      },
-      success: (res) => {
-        wx.showToast({
-          title: '删除成功',
-          icon: 'success',
-          duration: 2000
-        });
-        this.loadActivities();
-      }
-    });
   }
-}); 
+})

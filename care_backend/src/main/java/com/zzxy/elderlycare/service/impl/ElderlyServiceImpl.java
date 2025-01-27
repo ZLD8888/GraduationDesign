@@ -57,8 +57,33 @@ public class ElderlyServiceImpl implements ElderlyService {
 
     @Override
     public void deleteElderlyById(Integer id) {
+        log.info("删除老人账号");
+        Elderly dbelderlyInfo = elderlyMapper.getElderlyById(id);
+        String IdCard = dbelderlyInfo.getIdCard();
+        elderlyMapper.deleteelderlyUser(IdCard);
+        log.info("删除老人信息");
         elderlyMapper.deleteElderlyById(id);
         log.info("删除老人成功");
+        log.info("删除老人和护工id");
+        elderlyMapper.deleteElderlyAndUserId(id);
+
+    }
+
+    @Override
+    public void updateElderlyInfo(Integer id, Elderly elderly) {
+        log.info("更新老人信息:{}",elderly);
+        elderly.setUpdatedAt(LocalDateTime.now());
+        elderlyMapper.updateElderlyInfo(id,elderly);
+    }
+
+    @Override
+    public void updateUserPhone(String oldIdCard, String newIdCard) {
+        elderlyMapper.updateUserPhone(oldIdCard,newIdCard);
+    }
+
+    @Override
+    public void updateStaffId(Integer oldCaregiverId, Integer newCaregiverId) {
+        elderlyMapper.updateStaffId(oldCaregiverId,newCaregiverId);
     }
 
 

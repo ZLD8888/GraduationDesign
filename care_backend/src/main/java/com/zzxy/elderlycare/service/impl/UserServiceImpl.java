@@ -1,10 +1,9 @@
 package com.zzxy.elderlycare.service.impl;
 
-import com.zzxy.elderlycare.dto.ChangePassword;
+import com.zzxy.elderlycare.dto.ChangePasswordDto;
 import com.zzxy.elderlycare.entity.User;
 import com.zzxy.elderlycare.exception.ServiceException;
 import com.zzxy.elderlycare.mapper.UserMapper;
-import com.zzxy.elderlycare.security.JwtAuthenticationFilter;
 import com.zzxy.elderlycare.service.UserSersive;
 import com.zzxy.elderlycare.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +48,7 @@ public class UserServiceImpl implements UserSersive, UserDetailsService {
     }
 
     @Override
-    public void changePassword(Integer id, ChangePassword changePassword) {
+    public void changePassword(Integer id, ChangePasswordDto changePassword) {
         logger.info("id:{}", id);
         logger.info("changePassword:{}", changePassword);
         User dbuser = userMapper.getUserById(id);
@@ -62,6 +61,12 @@ public class UserServiceImpl implements UserSersive, UserDetailsService {
         }
         userMapper.changePassword(id, changePassword.getNewPassword());
 
+    }
+
+    @Override
+    public User getCaregiverById(Integer id) {
+        User caregiverById = userMapper.getCaregiverById(id);
+        return caregiverById;
     }
 
     @Override

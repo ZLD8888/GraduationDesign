@@ -15,8 +15,8 @@
       </view>
       <view class="form-item">
         <text class="label" style="margin-bottom: 5px;">出生日期</text>
-        <picker name="birthDate" mode="date" bindchange="handleDateChange" data-field="birthDate">
-          <view class="picker centered-picker">{{formData.birthDate || '请选择出生日期'}}</view>
+        <picker mode="date" bindchange="handleDateChange" data-field="birthDate" value="{{birthDate}}">
+          <view class="picker centered-picker">{{birthDate || '请选择出生日期'}}</view>
         </picker>
       </view>
       <view class="form-item">
@@ -34,8 +34,8 @@
       </view>
       <view class="form-item">
         <text class="label" style="margin-bottom: 5px;">入院日期</text>
-        <picker name="checkInDate" mode="date" bindchange="handleDateChange" data-field="checkInDate">
-          <view class="picker centered-picker">{{formData.checkInDate || '请选择入院日期'}}</view>
+        <picker mode="date" bindchange="handleDateChange" data-field="checkInDate" value="{{checkInDate}}">
+          <view class="picker centered-picker">{{checkInDate || '请选择入院日期'}}</view>
         </picker>
       </view>
       <view class="form-item">

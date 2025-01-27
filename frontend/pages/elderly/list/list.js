@@ -15,12 +15,17 @@ Page({
     this.loadElderlyList();
   },
 
+  onShow() {
+    this.loadElderlyList();
+  },
+
   onPullDownRefresh() {
     this.setData({
       currentPage: 1,
       hasMore: true
+    }, () => {
+      this.loadElderlyList();
     });
-    this.loadElderlyList();
   },
 
   onReachBottom() {
@@ -39,6 +44,10 @@ Page({
 
   loadElderlyList() {
     const token = wx.getStorageSync('token');
+    wx.showLoading({
+      title: '加载中...',
+    });
+    
     wx.request({
       url: `${app.globalData.baseUrl}/api/elderly`,
       method: 'GET',
@@ -46,10 +55,14 @@ Page({
         'Authorization': `Bearer ${token}`
       },
       success: (res) => {
-        this.setData({
-          elderlyList: res.data.data,
-          currentPage: 1
-        });
+        if (res.data.data) {
+          this.setData({
+            elderlyList: res.data.data
+          });
+        }
+      },
+      complete: () => {
+        wx.hideLoading();
         wx.stopPullDownRefresh();
       }
     });

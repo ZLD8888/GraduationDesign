@@ -5,7 +5,7 @@
       <text>家属账号绑定老人信息</text>
     </navigator>
 
-    <navigator url="/pages/family/activities/list" class="grid-item">
+    <navigator url="/pages/admin/activities/list" class="grid-item">
       <image src="/images/activity.png" mode="aspectFit"></image>
       <text>近期活动</text>
     </navigator>
@@ -23,15 +23,18 @@
 
   <view class="recent-section">
     <view class="section-header">
-      <text class="title">近期老人活动以及服务</text>
+      <text class="title">近期活动</text>
     </view>
     <view class="list">
-      <view class="item" wx:for="{{recentItems}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}" data-type="{{item.type}}">
-        <view class="item-main">
-          <text class="item-title">{{item.title}}</text>
-          <text class="item-time">{{item.time}}</text>
+      <view wx:if="{{recentItems.length === 0}}" class="no-activity">
+            <text>最近没有活动</text> <!-- 提示信息 -->
         </view>
-        <text class="item-status {{item.status}}">{{item.statusText}}</text>
+      <view class="item" wx:for="{{recentItems}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}" data-type="{{item.activityStatus}}">
+        <view class="item-main">
+          <text class="item-title">{{item.name}}</text>
+          <text class="item-time">{{item.startTime}}</text>
+        </view>
+        <text class="item-status {{item.activityStatus}}">{{item.description}}</text>
       </view>
     </view>
   </view>

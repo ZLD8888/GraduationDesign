@@ -2,10 +2,7 @@ package com.zzxy.elderlycare.mapper;
 
 import com.zzxy.elderlycare.entity.Elderly;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -31,4 +28,21 @@ public interface ElderlyMapper {
 
     @Select("select * from elderly_info where id_card = #{idCard}")
     Elderly getElderlyByIdCard(String idCard);
+
+    @Delete("delete from user_elderly where elderly_id = #{id}")
+    void deleteElderlyAndUserId(Integer id);
+
+    @Delete("delete from users where phone = #{IdCard}")
+    void deleteelderlyUser(String IdCard);
+
+    @Update("update elderly_info " +
+            "set name = #{elderly.name}, gender = #{elderly.gender}, birth_date=#{elderly.birthDate}, id_card=#{elderly.idCard}, bed_number=#{elderly.bedNumber}, check_in_date=#{elderly.checkInDate}, caregiver_id=#{elderly.caregiverId}, health_condition=#{elderly.healthCondition}, dietary_restrictions=#{elderly.dietaryRestrictions}, emergency_contact_name=#{elderly.emergencyContactName}, emergency_contact_phone=#{elderly.emergencyContactPhone}, updated_at=#{elderly.updatedAt} " +
+            "where id = #{id}")
+    void updateElderlyInfo(Integer id, Elderly elderly);
+
+    @Update("update users set phone = #{newIdCard} where phone = #{oldIdCard}")
+    void updateUserPhone(String oldIdCard, String newIdCard);
+
+    @Update("update user_elderly set user_id = #{newCaregiverId} where user_id = #{oldCaregiverId}")
+    void updateStaffId(Integer oldCaregiverId, Integer newCaregiverId);
 }

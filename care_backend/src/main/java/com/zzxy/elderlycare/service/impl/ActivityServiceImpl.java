@@ -1,10 +1,17 @@
 package com.zzxy.elderlycare.service.impl;
 
+import com.zzxy.elderlycare.dto.ActivityStatusDto;
+import com.zzxy.elderlycare.dto.JoinActivityDto;
 import com.zzxy.elderlycare.entity.Activity;
+import com.zzxy.elderlycare.entity.Elderly;
+import com.zzxy.elderlycare.entity.User;
 import com.zzxy.elderlycare.mapper.ActivityMapper;
 import com.zzxy.elderlycare.service.ActivityService;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.mapping.Join;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -65,11 +72,54 @@ public class ActivityServiceImpl implements ActivityService {
     public int getByElderlyId(Integer id) {
         log.info("查询是否存在参加活动的老人:{}",id);
         int i = activityMapper.getByElderlyId(id);
-        return 0;
+        return i;
     }
     @Override
-    public void joinActivity(Integer id) {
-        log.info("参加活动:{}",id);
-        activityMapper.joinActivity(id);
+    public User joinActivity(JoinActivityDto joinActivityDto) {
+        log.info("参加活动开始: {}", joinActivityDto);
+        try {
+            // 1. 添加参与记录
+            activityMapper.joinActivity(joinActivityDto);
+            log.info("添加参与记录成功");
+
+            // 2. 更新活动参与人数
+            activityMapper.updateActivityInfo(joinActivityDto.getActivityId());
+            log.info("更新活动参与人数成功");
+
+            return activityMapper.getByIdForElder(joinActivityDto.getElderlyId());
+        } catch (Exception e) {
+            log.error("参加活动失败", e);
+            throw e;
+        }
     }
+
+    @Override
+    public void UpdateActivityInfo(Activity activity) {
+        log.info("更新活动信息:{}",activity);
+        activity.setUpdatedAt(LocalDateTime.now());
+        activityMapper.UpdateActivityInfo(activity);
+    }
+
+    @Override
+    public void updateActivityStatus(Integer id, ActivityStatusDto activityStatusDto) {
+        activityMapper.UpdateActivityStatus(id,activityStatusDto);
+    }
+
+    @Override
+    public int checkParticipation(Integer activityId, Integer elderlyId) {
+        log.info("检查用户是否已报名活动: activityId={}, elderlyId={}", activityId, elderlyId);
+        return activityMapper.checkParticipation(activityId, elderlyId);
+    }
+
+    @Override
+    public List<User> getParticipants(Integer activityId) {
+        log.info("获取活动参与人员列表: activityId={}", activityId);
+        return activityMapper.getParticipants(activityId);
+    }
+
+    @Override
+    public void quitActivity(JoinActivityDto joinActivityDto) {
+        activityMapper.quitActivity(joinActivityDto);
+    }
+
 }

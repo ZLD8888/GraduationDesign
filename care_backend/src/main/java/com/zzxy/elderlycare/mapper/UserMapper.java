@@ -21,4 +21,7 @@ public interface UserMapper {
     void changePassword(Integer id, String newPassword);
     @Select("select * from users where id = #{id}")
     User getUserById(Integer id);
+
+    @Select("select * from users where id = #{id}")
+    User getCaregiverById(Integer id);
 }

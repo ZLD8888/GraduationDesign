@@ -1,6 +1,6 @@
 <view class="container">
   <view class="grid-container">
-    <navigator url="/pages/elderly/activities/list" class="grid-item">
+    <navigator url="/pages/admin/activities/list" class="grid-item">
       <image src="/images/activity.png" mode="aspectFit"></image>
       <text>近期活动</text>
     </navigator>
@@ -21,12 +21,15 @@
       <text class="title">近期活动</text>
     </view>
     <view class="list">
-      <view class="item" wx:for="{{recentItems}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}" data-type="{{item.type}}">
+      <view wx:if="{{recentItems.length === 0}}" class="no-activity">
+            <text>最近没有活动</text> <!-- 提示信息 -->
+        </view>
+      <view class="item" wx:for="{{recentItems}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}" data-type="{{item.activityStatus}}">
         <view class="item-main">
           <text class="item-title">{{item.name}}</text>
           <text class="item-time">{{item.startTime}}</text>
         </view>
-        <text class="item-status {{item.activityStatus}}">{{item.statusText}}</text>
+        <text class="item-status {{item.activityStatus}}">{{item.description}}</text>
       </view>
     </view>
   </view>

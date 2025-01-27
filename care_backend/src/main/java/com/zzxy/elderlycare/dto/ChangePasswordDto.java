@@ -3,7 +3,7 @@ package com.zzxy.elderlycare.dto;
 import lombok.Data;
 
 @Data
-public class ChangePassword {
+public class ChangePasswordDto {
     private String oldPassword;
     private String newPassword;
 }

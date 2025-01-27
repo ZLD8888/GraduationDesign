@@ -15,4 +15,9 @@ public interface ElderlyService {
 
     void deleteElderlyById(Integer id);
 
+    void updateElderlyInfo(Integer id, Elderly elderly);
+
+    void updateUserPhone(String oldIdCard, String newIdCard);
+
+    void updateStaffId(Integer oldCaregiverId, Integer newCaregiverId);
 }

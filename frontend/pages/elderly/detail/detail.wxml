@@ -34,7 +34,7 @@
       </view>
       <view class="info-item">
         <text class="label">护工姓名：</text>
-        <text class="value">{{elderlyInfo.caregiver.name}}</text>
+        <text class="value">{{elderlyInfo.caregiver.name || '未分配'}}</text>
       </view>
     </view>
 

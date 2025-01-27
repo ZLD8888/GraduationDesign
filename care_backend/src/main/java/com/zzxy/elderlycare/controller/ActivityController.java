@@ -1,15 +1,23 @@
 package com.zzxy.elderlycare.controller;
 
+import com.zzxy.elderlycare.dto.ActivityStatusDto;
+import com.zzxy.elderlycare.dto.JoinActivityDto;
 import com.zzxy.elderlycare.entity.Activity;
 import com.zzxy.elderlycare.entity.Result;
+import com.zzxy.elderlycare.entity.User;
 import com.zzxy.elderlycare.service.ActivityService;
+import com.zzxy.elderlycare.service.UserSersive;
+import com.zzxy.elderlycare.utils.JwtUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.http.HttpRequest;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping("/api/activity")
@@ -17,6 +25,11 @@ public class ActivityController {
     @Autowired
     private ActivityService activityService;
 
+    @Autowired
+    JwtUtil jwtUtil;
+
+    @Autowired
+    UserSersive userSersive;
     /**
      * @return 活动信息
      * @Description: 查询最近一周的活动信息
@@ -87,13 +100,102 @@ public class ActivityController {
         return Result.success("200","成功",range);
     }
 
-    @PostMapping("/{id}/join")
-    public Result joinActivity(@PathVariable Integer id) {
-        log.info("报名活动id:{}",id);
-        if (id == null) {
-            return Result.error("400", "活动id不能为空");
-        }
-        activityService.joinActivity(id);
-        return Result.success("200", "报名成功");
+    @PutMapping("/{id}")
+    public Result updateActivity(@PathVariable Integer id, @RequestBody Activity activity) {
+        log.info("更新活动信息id:{}", id);
+        activity.setId(id);
+        activityService.UpdateActivityInfo(activity);
+        return Result.success("200", "更新成功");
     }
+
+    @PutMapping("/{id}/status")
+    public Result updateActivityStatus(@PathVariable Integer id, @RequestBody ActivityStatusDto activityStatusDto) {
+        log.info("更新活动状态id:{},status:{}", id, activityStatusDto);
+        activityService.updateActivityStatus(id, activityStatusDto);
+        return Result.success("200", "更新成功");
+    }
+
+    /**
+     * 检查用户是否已报名活动
+     */
+    @GetMapping("/check/{activityId}/{userId}")
+    public Result checkParticipation(@PathVariable Integer activityId, @PathVariable Integer userId) {
+        log.info("检查用户是否已报名活动: activityId={}, userId={}", activityId, userId);
+        int count = activityService.checkParticipation(activityId, userId);
+        return Result.success("200", "查询成功", count > 0);
+    }
+
+    /**
+     * 获取活动参与人员列表
+     */
+    @GetMapping("/joinpeople/{activityId}")
+    public Result getParticipants(@PathVariable Integer activityId) {
+        log.info("获取活动参与人员列表: activityId={}", activityId);
+        List<User> participants = activityService.getParticipants(activityId);
+        return Result.success("200", "获取成功", participants);
+    }
+
+    /**
+     * @param joinActivityDto  活动id和老人id
+     * @return 报名成功信息，或者报名失败信息，或者活动不存在信息，或者活动已满信息，或者您已报名该活动信息，或者活动已结束信息，或者活动未开始信息，或者活动已取消信息
+     * @Description: 报名活动
+     */
+    @PostMapping("/{id}/join")
+    public Result joinActivity(@RequestBody JoinActivityDto joinActivityDto) {
+        log.info("报名活动信息: {}", joinActivityDto);
+        
+        // 验证活动是否存在
+        Activity activity = activityService.getById(joinActivityDto.getActivityId());
+        if (activity == null) {
+            return Result.error("400", "活动不存在");
+        }
+
+        // 检查用户是否已经报名
+        int participationCount = activityService.checkParticipation(
+            joinActivityDto.getActivityId(), 
+            joinActivityDto.getElderlyId()
+        );
+        log.info("用户报名状态检查结果: {}", participationCount);
+        
+        if (participationCount > 0) {
+            return Result.error("400", "您已报名该活动");
+        }
+        
+        // 验证活动是否已满
+        if (activity.getMaxParticipants() != null && 
+            activity.getCurrentParticipants() >= activity.getMaxParticipants()) {
+            return Result.error("400", "活动已满");
+        }
+        
+        // 验证活动状态
+        String status = activity.getActivityStatus();
+        if ("COMPLETED".equals(status)) {
+            return Result.error("400", "活动已结束");
+        }
+        if ("CANCELLED".equals(status)) {
+            return Result.error("400", "活动已取消");
+        }
+
+        try {
+            // 执行报名操作
+            activityService.joinActivity(joinActivityDto);
+            return Result.success("200", "报名成功");
+        } catch (Exception e) {
+            log.error("报名失败", e);
+            return Result.error("500", "报名失败：" + e.getMessage());
+        }
+    }
+
+    @PostMapping("/{activityId}/quit")
+    public Result quitActivity(@RequestBody JoinActivityDto joinActivityDto) {
+        log.info("退出活动信息: {}", joinActivityDto);
+        // 验证活动是否存在
+        Activity activity = activityService.getById(joinActivityDto.getActivityId());
+        if (activity == null) {
+            return Result.error("400", "活动不存在");
+        }
+        activityService.quitActivity(joinActivityDto);
+        return Result.success("200", "退出成功");
+    }
+
 }

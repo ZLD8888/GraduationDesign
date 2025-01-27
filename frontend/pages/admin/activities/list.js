@@ -54,20 +54,20 @@ Page({
         'Authorization': `Bearer ${token}`
       },
       success: (res) => {
-        const activities = res.data.data.map(activity => ({
-          ...activity,
-          startTime: this.formatDateTime(activity.startTime),
-          endTime: this.formatDateTime(activity.endTime)
-        }));
-        this.setData({
-          activities: activities
-        });
-        console.log(res.data.data);
+        if (res.data && res.data.data) {
+          const activities = res.data.data.map(activity => ({
+            ...activity,
+            displayStartTime: this.formatDateTime(activity.startTime),
+            displayEndTime: this.formatDateTime(activity.endTime)
+          }));
+          this.setData({ activities });
+        }
       }
     });
   },
 
   formatDateTime(dateTime) {
+    if (!dateTime) return '';
     const date = new Date(dateTime);
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
