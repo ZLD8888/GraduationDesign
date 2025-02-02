@@ -85,4 +85,7 @@ public interface ActivityMapper {
 
     @Delete("delete from activity_participants where activity_id = #{activityId} AND elderly_id = #{elderlyId}")
     void quitActivity(JoinActivityDto joinActivityDto);
+
+    @Select("select * from activities where id in (select activity_id from activity_participants where elderly_id = #{userId})")
+    List<Activity> getJoinActivitiesHistory(Integer userId);
 }

@@ -198,4 +198,13 @@ public class ActivityController {
         return Result.success("200", "退出成功");
     }
 
+    @GetMapping("/history/{userId}")
+    public Result getJoinActivitiesHistory(@PathVariable Integer userId){
+        log.info("获取用户历史活动信息: {}", userId);
+        //先判断用户是老人还是家属
+        //如何是家属，先去查找家属绑定老人的信息，根据这些老人信息，再去查找活动信息
+        //如果是老人，返回所有参与的活动
+        List<Activity> joinActivitiesHistory = activityService.getJoinActivitiesHistory(userId);
+        return Result.success("200", "获取成功",joinActivitiesHistory);
+    }
 }

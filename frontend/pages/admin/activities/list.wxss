@@ -139,40 +139,42 @@
   color: #fff;
 }
 
-.add-btn {
+.bottom-buttons {
   position: fixed;
-  right: 40rpx;
-  bottom: 140rpx;
+  bottom: 30rpx;
+  right: 30rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  z-index: 1000;
+}
+
+.add-btn, .calendar-btn, .history-btn {
   width: 100rpx;
   height: 100rpx;
-  background: #1296db;
   border-radius: 50%;
+  background-color: #4CAF50;
   display: flex;
-  align-items: center;
   justify-content: center;
-  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
+  align-items: center;
+  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.2);
 }
 
 .calendar-btn {
-  position: fixed;
-  right: 40rpx;
-  bottom: 40rpx;
-  width: 100rpx;
-  height: 100rpx;
-  background: #fff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
 }
 
-.calendar-btn image {
-  width: 60rpx;
-  height: 60rpx;
+.history-btn {
+  background-color: #ffffff;
 }
 
-.add-icon {
-  color: #fff;
-  font-size: 48rpx;
+.add-btn .add-icon {
+  color: white;
+  font-size: 60rpx;
+  font-weight: bold;
+}
+
+.calendar-btn image, .history-btn image {
+  width: 50rpx;
+  height: 50rpx;
 } 

@@ -46,44 +46,63 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        // 从请求中提取JWT令牌
-        String token = extractToken(request);
-        // 如果令牌存在且有效
-        if (token != null && jwtUtil.validateToken(token)) {
-            // 从令牌中提取手机号
-            String phone = jwtUtil.getPhoneFromToken(token);
-            // 如果手机号存在
-            if (phone != null) {
-                logger.info("手机号:{}",phone);
-                try {
-                    logger.info("尝试加载用户: {}", phone);
-                    // 使用手机号加载用户详情
-                    UserDetails userDetails = userDetailsService.loadUserByUsername(phone);
-                    // 如果用户详情存在
-                    if (userDetails != null) {
-                        // 创建一个新的认证令牌，包含用户详情、凭证（这里为null）和权限
-                        UsernamePasswordAuthenticationToken authentication =
-                                new UsernamePasswordAuthenticationToken(
-                                        userDetails,
-                                        null,
-                                        userDetails.getAuthorities()
+        try {
+            // 从请求中提取JWT令牌
+            String token = extractToken(request);
+            logger.info("Received token: {}", token != null ? "present" : "null");
+            
+            if (token != null) {
+                logger.info("Validating token...");
+                if (jwtUtil.validateToken(token)) {
+                    String phone = jwtUtil.getPhoneFromToken(token);
+                    logger.info("Token validated, phone: {}", phone);
+                    
+                    if (phone != null) {
+                        try {
+                            UserDetails userDetails = userDetailsService.loadUserByUsername(phone);
+                            if (userDetails != null) {
+                                UsernamePasswordAuthenticationToken authentication =
+                                        new UsernamePasswordAuthenticationToken(
+                                                userDetails,
+                                                null,
+                                                userDetails.getAuthorities()
+                                        );
+                                authentication.setDetails(
+                                        new WebAuthenticationDetailsSource().buildDetails(request)
                                 );
-                        // 设置认证令牌的详细信息，包括IP地址、会话ID等
-                        authentication.setDetails(
-                                new WebAuthenticationDetailsSource().buildDetails(request)
-                        );
-                        // 将认证令牌设置到安全上下文中
-                        SecurityContextHolder.getContext().setAuthentication(authentication);
+                                SecurityContextHolder.getContext().setAuthentication(authentication);
+                                logger.info("Successfully set authentication in SecurityContext");
+                            } else {
+                                logger.error("UserDetails is null for phone: {}", phone);
+                            }
+                        } catch (UsernameNotFoundException e) {
+                            logger.error("User not found: {}", phone, e);
+                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                            response.getWriter().write("User not found");
+                            return;
+                        }
+                    } else {
+                        logger.error("Phone number is null in token");
+                        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                        response.getWriter().write("Invalid token: no phone number");
+                        return;
                     }
-                } catch (UsernameNotFoundException e) {
-                    logger.error("用户未找到: {}", phone);
-                    // 可以选择返回401 Unauthorized 或其他处理
+                } else {
+                    logger.error("Token validation failed");
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.getWriter().write("Invalid token");
+                    return;
                 }
+            } else {
+                logger.debug("No token found in request");
             }
-        }
 
-        // 将请求传递到下一个过滤器
-        filterChain.doFilter(request, response);
+            filterChain.doFilter(request, response);
+        } catch (Exception e) {
+            logger.error("Error processing JWT token", e);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("Error processing token: " + e.getMessage());
+        }
     }
 
 
@@ -96,14 +115,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private String extractToken(HttpServletRequest request) {
         // 从请求头中获取Authorization字段的值
         String bearerToken = request.getHeader("Authorization");
+        logger.debug("Authorization header: {}", bearerToken);
 
         // 检查Authorization字段是否存在且以"Bearer "开头
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             // 去除"Bearer "前缀，返回剩余的令牌部分
-            return bearerToken.substring(7);
+            String token = bearerToken.substring(7);
+            logger.debug("Extracted token: {}", token);
+            return token;
         }
 
-        // 如果没有找到有效的令牌，返回null
+        logger.debug("No Bearer token found");
         return null;
     }
 

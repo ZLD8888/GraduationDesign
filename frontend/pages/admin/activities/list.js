@@ -16,7 +16,9 @@ Page({
       'CANCELLED': '已取消'
     },
     activities: [],
-    isStaff: false
+    isStaff: false,
+    isElderly: false,
+    isFamily: false
   },
 
   onLoad() {
@@ -30,9 +32,11 @@ Page({
 
   checkUserRole() {
     const userRole = wx.getStorageSync('userRole');
-    console.log("userRole:",userRole);
+    console.log("userRole:", userRole);
     this.setData({
-      isStaff: userRole === 'ADMIN'
+      isStaff: userRole === 'ADMIN' || userRole === 'STAFF',
+      isElderly: userRole === 'ELDERLY',
+      isFamily: userRole === 'FAMILY'
     });
     console.log("isStaff:",this.data.isStaff);
   },
@@ -100,6 +104,13 @@ Page({
   goToCalendar() {
     wx.navigateTo({
       url: '/pages/activities/calendar/calendar'
+    });
+  },
+
+  goToHistory() {
+    const userId = wx.getStorageSync('userId');
+    wx.navigateTo({
+      url: `/pages/activities/history/history?userId=${userId}`
     });
   },
 

@@ -46,4 +46,6 @@ public interface ActivityService {
     List<User> getParticipants(Integer activityId);
 
     void quitActivity(JoinActivityDto joinActivityDto);
+
+    List<Activity> getJoinActivitiesHistory(Integer userId);
 }

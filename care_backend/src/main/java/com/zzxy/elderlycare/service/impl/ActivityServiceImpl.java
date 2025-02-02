@@ -122,4 +122,10 @@ public class ActivityServiceImpl implements ActivityService {
         activityMapper.quitActivity(joinActivityDto);
     }
 
+    @Override
+    public List<Activity> getJoinActivitiesHistory(Integer userId) {
+        List<Activity> dbjoinActivitiesHistory = activityMapper.getJoinActivitiesHistory(userId);
+        return dbjoinActivitiesHistory;
+    }
+
 }

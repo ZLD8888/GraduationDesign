@@ -1,14 +1,6 @@
 <view class="container">
-  <!-- 活动状态切换 -->
-  <view class="status-tabs">
-    <view 
-      wx:for="{{statusList}}" 
-      wx:key="value"
-      class="tab-item {{currentStatus === item.value ? 'active' : ''}}"
-      bindtap="handleStatusChange"
-      data-status="{{item.value}}">
-      {{item.label}} 
-    </view>
+  <view class="header">
+    <text class="title">活动参与历史</text>
   </view>
 
   <!-- 活动列表 -->
@@ -38,29 +30,12 @@
 
       <view class="activity-footer">
         <text class="organizer">组织者：{{item.organizerName}}</text>
-        <view class="action-buttons" wx:if="{{isStaff}}">
-          <button class="btn-edit" catchtap="goToEdit" data-id="{{item.id}}">编辑</button>
-          <button class="btn-delete" catchtap="handleDelete" data-id="{{item.id}}">删除</button>
-        </view>
       </view>
     </view>
   </view>
 
-  <!-- 底部按钮组 -->
-  <view class="bottom-buttons">
-    <!-- 添加按钮 -->
-    <view class="add-btn" wx:if="{{isStaff}}" bindtap="goToAdd">
-      <text class="add-icon">+</text>
-    </view>
-
-    <!-- 日历视图切换按钮 -->
-    <view class="calendar-btn" bindtap="goToCalendar">
-      <image src="/images/calendar.png" mode="aspectFit"></image>
-    </view>
-
-    <!-- 历史活动记录按钮 -->
-    <view class="history-btn" wx:if="{{isElderly || isFamily}}" bindtap="goToHistory">
-      <image src="/images/history.png" mode="aspectFit"></image>
-    </view>
+  <!-- 无数据提示 -->
+  <view class="no-data" wx:if="{{activities.length === 0}}">
+    <text>暂无参与活动记录</text>
   </view>
 </view> 
