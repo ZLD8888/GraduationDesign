@@ -13,11 +13,10 @@ public interface ServiceMapper {
     List<Services> selectAllList();
 
     @Select("""
-            SELECT au.appointment_no AS appointmentNo,s.name AS serviceName,e.name AS elderlyName,u.name AS userName,s.name AS price,au.data AS appointmentTime, au.status AS status,au.create_time AS createTime
+            SELECT au.appointment_no AS appointmentNo,s.name AS serviceName,u.name AS elderlyName,u.name AS userName,s.price AS price,au.data AS data,au.time AS time,au.status AS status,au.create_time AS createTime
             FROM
                 appointments_user au
             INNER JOIN services s         ON au.service_id = s.id
-            INNER JOIN elderly_info e    ON au.elderly_id = e.id
             INNER JOIN users u            ON au.user_id = u.id;""")
     List<Appointments> selectAllAppointment();
 
@@ -45,6 +44,6 @@ public interface ServiceMapper {
             "(#{appointmentNo}, #{userId}, #{serviceId}, #{elderlyId}, #{date}, #{time}, 'CONFIRMED', #{createTime}, #{updateTime})")
     void addAppointment(AppointmentUserDto appointmentUserDto);
 
-    @Select("select au.appointment_no AS appointmentNo,s.name AS serviceName,e.name AS elderlyName,u.name AS userName,s.price AS price,au.data AS appointmentTime, au.status AS status,au.create_time AS createTime from appointments_user au inner join services s on au.service_id = s.id inner join users u on au.user_id = u.id inner join elderly_info e on au.elderly_id = e.id where au.elderly_id = #{userID} or au.user_id = #{userID}")
+    @Select("select au.appointment_no AS appointmentNo,s.name AS serviceName,u.name AS elderlyName,u.name AS userName,s.price AS price,au.data AS data, au.time AS time,au.status AS status,au.create_time AS createTime,s.image_url AS imageUrl from appointments_user au inner join services s on au.service_id = s.id inner join users u on au.user_id = u.id  where au.elderly_id = #{userID} or au.user_id = #{userID}")
     List<Appointments> getElderlyAppointments(Integer userID);
 }

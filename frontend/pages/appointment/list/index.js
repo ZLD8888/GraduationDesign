@@ -366,10 +366,12 @@ Page({
                     elderlyName: item.elderlyName,
                     userName: item.userName,
                     price: item.price,
-                    appointmentTime: item.appointmentTime,
+                    data: item.data,
+                    time: item.time,
                     status: item.status,
                     createTime: item.createTime,
-                    statusText: this.data.statusMap[item.status] || item.status
+                    statusText: this.data.statusMap[item.status] || item.status,
+                    imageUrl : item.imageUrl
                 }));
                 
                 this.setData({ appointments });

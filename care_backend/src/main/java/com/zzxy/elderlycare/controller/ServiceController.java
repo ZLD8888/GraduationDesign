@@ -47,6 +47,7 @@ public class ServiceController {
     @GetMapping("/appointments")
     public Result getAppointmentList() {
         List<Appointments> appointmentList = serviceService.getAppointmentList();
+        log.info("返回的预约数据：{}",appointmentList);
         return Result.success("200", "获取预约列表成功",appointmentList);
     }
 
@@ -178,8 +179,14 @@ public class ServiceController {
         return Result.success("200", "预约成功");
     }
 
+    /**
+     * @param userID  用户ID
+     * @return  预约列表
+     * 获取老人自己的预约列表
+     */
     @GetMapping("/elderly/{userID}/appointments")
     public Result getElderlyAppointments(@PathVariable Integer userID) {
+        log.info("获取老人预约列表的用户ID: {}", userID);
         List<Appointments> elderlyAppointments = serviceService.getElderlyAppointments(userID);
         return Result.success("200", "获取老人预约列表成功", elderlyAppointments);
     }

@@ -77,6 +77,7 @@ public class ServiceServiceImpl implements ServiceService {
     @Override
     public List<Appointments> getElderlyAppointments(Integer userID) {
         List<Appointments> elderlyAppointments = serviceMapper.getElderlyAppointments(userID);
+        log.info("查询到老人的预约列表：{}",elderlyAppointments);
         return elderlyAppointments;
     }
 

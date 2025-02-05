@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 
 @Data
 public class Appointments {
-    private Integer id;
     private String  appointmentNo;
     private Integer serviceId;
     private String serviceName;
@@ -23,5 +22,8 @@ public class Appointments {
     private LocalDateTime updateTime;
     private Integer creatorId;
     private String creatorType;
+    private String imageUrl;
+    private String data;
+    private String time;
 
 }

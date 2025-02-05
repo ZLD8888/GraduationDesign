@@ -69,41 +69,56 @@
   <view class="appointment-section">
     <view class="section-title" style="font-size: 20px; font-weight: bold;">预约列表</view>
     <view class="appointment-list">
-      <block wx:if="{{appointments.length === 0}}">
-        <text class="no-appointments">暂无预约信息</text>
-      </block>
-      <block wx:else>
-        <view class="appointment-item" wx:for="{{appointments}}" wx:key="appointmentNo">
-          <view class="appointment-header">
-            <text class="service-name">{{item.serviceName}}</text>
-            <text class="status {{item.status}}">{{item.statusText}}</text>
+      <view class="appointment-card" wx:for="{{appointments}}" wx:key="id">
+        <view class="card-header">
+          <view class="service-info">
+            <view class="service-detail">
+              <image 
+              class="service-icon" 
+              src="{{item.imageUrl || '/images/default-service.png'}}" 
+              mode="aspectFit"
+            />
+              <text class="service-name">{{item.serviceName}}</text>
+              <text class="appointment-no">预约编号：{{item.appointmentNo}}</text>
+            </view>
           </view>
+          <text class="status {{item.status === 'CONFIRMED' ? 'confirmed' : item.status === 'COMPLETED' ? 'completed' : 'pending'}}">
+            {{item.status === 'CONFIRMED' ? '已确认' : item.status === 'COMPLETED' ? '已完成' : '待确认'}}
+          </text>
+        </view>
+
+        <view class="card-content">
           <view class="info-row">
-            <text class="label">预约编号：</text>
-            <text class="value">{{item.appointmentNo}}</text>
-          </view>
-          <view class="info-row">
-            <text class="label">预约人：</text>
-            <text class="value">{{item.elderlyName}}</text>
-          </view>
-          <view class="info-row">
-            <text class="label">联系电话：</text>
+            <text class="label">预约人姓名：</text>
             <text class="value">{{item.userName}}</text>
           </view>
           <view class="info-row">
+            <text class="label">服务老人姓名：</text>
+            <text class="value">{{item.elderlyName}}</text>
+          </view>
+          <view class="info-row">
             <text class="label">预约时间：</text>
-            <text class="value">{{item.appointmentTime}}</text>
+            <text class="value">{{item.data}} {{item.time}}</text>
           </view>
           <view class="info-row">
             <text class="label">服务费用：</text>
             <text class="value price">¥{{item.price}}</text>
           </view>
-          <view class="info-row">
-            <text class="label">创建时间：</text>
-            <text class="value">{{item.createTime}}</text>
+        </view>
+
+        <view class="card-footer">
+          <text class="create-time">创建时间：{{item.createTime}}</text>
+          <view class="action-buttons">
+            <button 
+              class="action-btn cancel"
+              wx:if="{{item.status === 'PENDING' || item.status === 'CONFIRMED'}}"
+              wx:if="{{isFamily || isElderly}}"
+              bindtap="cancelAppointment"
+              data-id="{{item.id}}"
+            >取消预约</button>
           </view>
         </view>
-      </block>
+      </view>
     </view>
   </view>
 </view> 
