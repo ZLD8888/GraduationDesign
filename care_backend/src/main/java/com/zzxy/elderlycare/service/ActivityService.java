@@ -48,4 +48,10 @@ public interface ActivityService {
     void quitActivity(JoinActivityDto joinActivityDto);
 
     List<Activity> getJoinActivitiesHistory(Integer userId);
+
+    /**
+     * 获取所有活动列表
+     * @return 所有活动列表
+     */
+    List<Activity> getAllActivities();
 }

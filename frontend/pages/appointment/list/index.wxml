@@ -1,0 +1,109 @@
+<view class="container">
+  <!-- 管理员/护工视图 -->
+  <block wx:if="{{isAdmin || isStaff}}">
+    <view class="header">
+      <text class="title section-title" style="font-size: 20px; font-weight: bold;">预约管理</text>
+      <button wx:if="{{isAdmin}}" class="add-btn" bindtap="goToServiceSettings" style="font-size: 20px; font-weight: bold;">服务设置</button>
+    </view>
+  </block>
+
+  <!-- 所有角色都可以看到服务列表 -->
+  <view class="service-list">
+    <view class="service-item" 
+      wx:for="{{services}}" 
+      wx:key="id" 
+      bindtap="handleServiceTap"
+      data-id="{{item.id}}"
+    >
+      <image class="service-image" src="{{item.imageUrl}}" mode="aspectFill"></image>
+      <view class="service-info">
+        <text class="service-name">{{item.name}}</text>
+        <text class="service-price">¥{{item.price}}/次</text>
+        <text class="service-desc">{{item.description}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 预约表单（仅老人和家属可见） -->
+  <block wx:if="{{!isAdmin && !isStaff}}">
+    <view class="booking-form" wx:if="{{selectedService}}" id="bookingForm">
+      <view class="form-header">
+        <text class="selected-service">已选择：{{selectedService.name}}</text>
+        <text class="service-price">¥{{selectedService.price}}/次</text>
+      </view>
+      <view class="form-item">
+        <text class="label">选择日期：</text>
+        <picker mode="date" value="{{selectedDate}}" start="{{today}}" end="{{maxDate}}" bindchange="handleDateChange">
+          <view class="picker">{{selectedDate || '请选择日期'}}</view>
+        </picker>
+      </view>
+
+      <view class="form-item" wx:if="{{selectedDate}}">
+        <text class="label">选择时间段：</text>
+        <view class="time-slots">
+          <view 
+            wx:for="{{timeSlots}}" 
+            wx:key="id"
+            class="time-slot {{item.remainingSlots === 0 ? 'disabled' : ''}} {{selectedTimeSlot === item.id ? 'selected' : ''}}"
+            bindtap="handleTimeSlotSelect"
+            data-slot="{{item}}"
+          >
+            <text>{{item.startTime}}-{{item.endTime}}</text>
+            <text class="remaining">(剩余{{item.remainingSlots}}次)</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="form-item" wx:if="{{isFamily}}">
+        <text class="label">选择老人：</text>
+        <picker bindchange="handleElderlyChange" value="{{selectedElderly}}" range="{{boundElderlyList}}" range-key="name">
+          <view class="picker">{{selectedElderly ? boundElderlyList[selectedElderly].name : '请选择老人'}}</view>
+        </picker>
+      </view>
+
+      <button class="submit-btn" bindtap="createAppointment">确认预约</button>
+    </view>
+  </block>
+
+  <!-- 预约列表 -->
+  <view class="appointment-section">
+    <view class="section-title" style="font-size: 20px; font-weight: bold;">预约列表</view>
+    <view class="appointment-list">
+      <block wx:if="{{appointments.length === 0}}">
+        <text class="no-appointments">暂无预约信息</text>
+      </block>
+      <block wx:else>
+        <view class="appointment-item" wx:for="{{appointments}}" wx:key="appointmentNo">
+          <view class="appointment-header">
+            <text class="service-name">{{item.serviceName}}</text>
+            <text class="status {{item.status}}">{{item.statusText}}</text>
+          </view>
+          <view class="info-row">
+            <text class="label">预约编号：</text>
+            <text class="value">{{item.appointmentNo}}</text>
+          </view>
+          <view class="info-row">
+            <text class="label">预约人：</text>
+            <text class="value">{{item.elderlyName}}</text>
+          </view>
+          <view class="info-row">
+            <text class="label">联系电话：</text>
+            <text class="value">{{item.userName}}</text>
+          </view>
+          <view class="info-row">
+            <text class="label">预约时间：</text>
+            <text class="value">{{item.appointmentTime}}</text>
+          </view>
+          <view class="info-row">
+            <text class="label">服务费用：</text>
+            <text class="value price">¥{{item.price}}</text>
+          </view>
+          <view class="info-row">
+            <text class="label">创建时间：</text>
+            <text class="value">{{item.createTime}}</text>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+</view> 

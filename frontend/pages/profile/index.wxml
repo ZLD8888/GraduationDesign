@@ -14,12 +14,12 @@
   <view class="function-list">
     <!-- 工作人员功能 -->
     <block wx:if="{{userInfo.role === 'STAFF'}}">
-      <navigator url="/pages/elderly/list/index" class="function-item">
+      <navigator url="/pages/staff/elderly/info/index" class="function-item">
         <image class="icon" src="/images/elderly-manage.png" mode="aspectFit"></image>
         <text class="text">老人管理</text>
         <text class="arrow">></text>
       </navigator>
-      <navigator url="/pages/elderly/activities/list" class="function-item">
+      <navigator url="/pages/admin/activities/list" class="function-item">
         <image class="icon" src="/images/activity-manage.png" mode="aspectFit"></image>
         <text class="text">活动管理</text>
         <text class="arrow">></text>
@@ -28,7 +28,7 @@
 
     <!-- 家属功能 -->
     <block wx:if="{{userInfo.role === 'FAMILY'}}">
-      <navigator url="/pages/elderly/detail/index" class="function-item">
+      <navigator url="/pages/family/elderly/info/index" class="function-item">
         <image class="icon" src="/images/elderly-info.png" mode="aspectFit"></image>
         <text class="text">老人信息</text>
         <text class="arrow">></text>

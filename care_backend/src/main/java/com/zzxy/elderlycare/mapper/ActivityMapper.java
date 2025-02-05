@@ -14,7 +14,7 @@ import java.util.List;
 public interface ActivityMapper {
     @Select("SELECT a.*, u.name as organizer_name FROM activities a " +
             "LEFT JOIN users u ON a.organizer_id = u.id " +
-            "WHERE a.created_at >= NOW() - INTERVAL 7 DAY")
+            "WHERE a.start_time >= NOW() - INTERVAL 7 DAY")
     List<Activity> recentItems();
 
     @Select("SELECT a.*, u.name as organizer_name FROM activities a " +
@@ -88,4 +88,7 @@ public interface ActivityMapper {
 
     @Select("select * from activities where id in (select activity_id from activity_participants where elderly_id = #{userId})")
     List<Activity> getJoinActivitiesHistory(Integer userId);
+
+    @Select("SELECT * FROM activities")
+    List<Activity> getAllActivities();
 }

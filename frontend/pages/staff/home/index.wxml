@@ -4,7 +4,7 @@
   </view>
 
   <view class="grid-container">
-    <navigator url="/pages/elderly/list/list" class="grid-item">
+    <navigator url="/pages/staff/elderly/info/index" class="grid-item">
       <image src="/images/elderly-info.png" mode="aspectFit"></image>
       <text>老人信息管理</text>
     </navigator>

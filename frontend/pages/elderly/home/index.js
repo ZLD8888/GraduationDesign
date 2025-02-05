@@ -30,10 +30,10 @@ Page({
                 console.log(res.data.data);  
                 console.log(this.data.recentItems); 
                 if (this.data.recentItems.length === 0) {
-                    wx.showToast({
-                        title: '最近没有活动或者服务', 
-                        icon: 'none'
-                    });
+                    // wx.showToast({
+                    //     title: '最近没有活动或者服务', 
+                    //     icon: 'none'
+                    // });
                 }
             } else {
                 console.error('返回的数据格式不正确:', res.data);

@@ -1,0 +1,141 @@
+<view class="container">
+  <view class="header">
+    <text class="title">服务设置</text>
+    <button class="add-btn" bindtap="handleAddService">添加服务</button>
+  </view>
+
+  <!-- 服务列表 -->
+  <view class="service-list" wx:if="{{!isEditing}}">
+    <view class="service-item" wx:for="{{services}}" wx:key="id">
+      <image class="service-image" src="{{item.imageUrl}}" mode="aspectFill" style="width: 100px; height: 100px;"></image>
+      <view class="service-info">
+        <view class="service-header">
+          <text class="service-name">{{item.name}}</text>
+          <text class="service-price">¥{{item.price}}</text>
+        </view>
+        <text class="service-desc">{{item.description}}</text>
+        <view class="service-actions">
+          <button class="action-btn edit" bindtap="handleEditService" data-id="{{item.id}}">编辑</button>
+          <button class="action-btn delete" bindtap="handleDeleteService" data-id="{{item.id}}">删除</button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 编辑表单 -->
+  <view class="edit-form" wx:if="{{isEditing}}">
+    <view class="form-item">
+      <text class="label">服务名称</text>
+      <input 
+        class="input" 
+        value="{{currentService.name}}" 
+        placeholder="请输入服务名称"
+        data-field="name"
+        bindinput="handleInputChange"
+      />
+    </view>
+
+    <view class="form-item">
+      <text class="label">服务价格</text>
+      <input 
+        class="input" 
+        type="digit"
+        value="{{currentService.price}}" 
+        placeholder="请输入服务价格"
+        data-field="price"
+        bindinput="handleInputChange"
+      />
+    </view>
+
+    <view class="form-item">
+      <text class="label">服务描述</text>
+      <textarea 
+        class="textarea" 
+        value="{{currentService.description}}" 
+        placeholder="请输入服务描述"
+        data-field="description"
+        bindinput="handleInputChange"
+      ></textarea>
+    </view>
+
+    <view class="form-item">
+      <text class="label">服务时间段</text>
+      <view class="time-slots-config">
+        <!-- 可预约日期选择 -->
+        <view class="available-days">
+          <text class="sub-label">可预约日期：</text>
+          <checkbox-group bindchange="handleDaysChange">
+            <label class="day-item" wx:for="{{days}}" wx:key="value">
+              <checkbox 
+                value="{{item.value}}" 
+                checked="{{item.checked}}"
+                data-value="{{item.value}}"
+              />
+              <text>{{item.label}}</text>
+            </label>
+          </checkbox-group>
+        </view>
+        
+        <!-- 时间段设置 -->
+        <view class="time-slot-item">
+          <view class="time-slot-inputs">
+            <picker
+              mode="time"
+              class="time-input"
+              value="{{currentService.startTime}}"
+              start="00:00"
+              end="23:59"
+              data-field="startTime"
+              bindchange="handleTimeSlotChange"
+            >
+              <view class="picker-content">{{currentService.startTime || '开始时间'}}</view>
+            </picker>
+            <text class="time-separator">-</text>
+            <picker
+              mode="time"
+              class="time-input"
+              value="{{currentService.endTime}}"
+              start="{{currentService.startTime || '00:00'}}"
+              end="23:59"
+              data-field="endTime"
+              bindchange="handleTimeSlotChange"
+            >
+              <view class="picker-content">{{currentService.endTime || '结束时间'}}</view>
+            </picker>
+            <input 
+              class="slots-input"
+              type="number"
+              placeholder="每日名额数"
+              value="{{currentService.maxAppointments}}"
+              data-field="maxAppointments"
+              bindinput="handleTimeSlotChange"
+            />
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="form-item">
+      <text class="label">服务图片</text>
+      <view class="image-upload" bindtap="handleUploadImage">
+        <view class="upload-content">
+          <image 
+            wx:if="{{currentService.imageUrl}}" 
+            src="{{currentService.imageUrl}}" 
+            mode="aspectFit"
+            binderror="handleImageError"
+            class="service-image"
+          ></image>
+          <view wx:else class="upload-placeholder">
+            <text>点击上传图片</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="form-actions">
+      <button class="btn cancel" bindtap="handleCancel">取消</button>
+      <button class="btn save" bindtap="handleSaveService">保存</button>
+    </view>
+  </view>
+</view> 

@@ -21,9 +21,13 @@
     "pages/elderly/health/list",
     "pages/elderly/health/detail",
     "pages/elderly/health/add",
-    "pages/staff/activities/list",
     "pages/family/elderly/info/index",
-    "pages/activities/history/history"
+    "pages/activities/history/history",
+    "pages/staff/elderly/info/index",
+    "pages/appointment/list/index",
+    "pages/appointment/detail/index",
+    "pages/appointment/settings/index",
+    "pages/appointment/serviceDetail/service"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -23,6 +23,16 @@
         <text class="label" style="margin-bottom: 5px;">身份证号</text>
         <input name="idCard" value="{{formData.idCard}}" placeholder="请输入身份证号" />
       </view>
+      <view class="form-item">
+        <text class="label" style="margin-bottom: 5px;">手机号</text>
+        <input 
+          name="phone" 
+          type="number"
+          value="{{formData.phone}}" 
+          placeholder="请输入手机号" 
+          maxlength="11"
+        />
+      </view>
     </view>
 
     <!-- 住院信息 -->

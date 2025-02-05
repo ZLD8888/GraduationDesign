@@ -1,9 +1,9 @@
 <view class="container">
   <!-- 绑定老人按钮 -->
-  <view class="bind-button" bindtap="showBindModal">
+  <!-- <view class="bind-button" bindtap="showBindModal">
     <text class="bind-icon">+</text>
     <text>绑定老人</text>
-  </view>
+  </view> -->
 
   <!-- 已绑定老人列表 -->
   <view class="elderly-list">
@@ -42,7 +42,7 @@
 
       <view class="elderly-actions">
         <button class="btn-detail" bindtap="goToDetail" data-id="{{item.id}}">查看详情</button>
-        <button class="btn-unbind" bindtap="handleUnbind" data-id="{{item.id}}">解除绑定</button>
+        <!-- <button class="btn-unbind" bindtap="handleUnbind" data-id="{{item.id}}">解除绑定</button> -->
       </view>
     </view>
   </view>
@@ -50,11 +50,11 @@
   <!-- 无绑定老人提示 -->
   <view class="no-data" wx:if="{{elderlyList.length === 0}}">
     <text>暂未绑定老人信息</text>
-    <text>点击上方按钮绑定老人</text>
+    <!-- <text>点击上方按钮绑定老人</text> -->
   </view>
 
   <!-- 绑定老人弹窗 -->
-  <view class="modal" wx:if="{{showBindModal}}">
+  <!-- <view class="modal" wx:if="{{showBindModal}}">
     <view class="modal-content">
       <view class="modal-header">
         <text class="modal-title">绑定老人</text>
@@ -77,5 +77,5 @@
         <button class="btn-confirm" bindtap="handleBind">确认绑定</button>
       </view>
     </view>
-  </view>
+  </view> -->
 </view> 

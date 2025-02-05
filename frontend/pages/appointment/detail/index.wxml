@@ -1,0 +1,63 @@
+<view class="container">
+  <view class="detail-card">
+    <view class="card-header">
+      <text class="service-name">{{appointmentInfo.serviceName}}</text>
+      <text class="status {{appointmentInfo.status}}">{{appointmentInfo.statusText}}</text>
+    </view>
+
+    <view class="info-section">
+      <view class="info-item">
+        <text class="label">预约编号：</text>
+        <text class="value">{{appointmentInfo.appointmentNo}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">预约人：</text>
+        <text class="value">{{appointmentInfo.elderlyName}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">联系电话：</text>
+        <text class="value">{{appointmentInfo.elderlyPhone}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">预约时间：</text>
+        <text class="value">{{appointmentInfo.appointmentTime}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">服务费用：</text>
+        <text class="value price">¥{{appointmentInfo.price}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">创建时间：</text>
+        <text class="value">{{appointmentInfo.createTime}}</text>
+      </view>
+      <view class="info-item" wx:if="{{appointmentInfo.note}}">
+        <text class="label">备注：</text>
+        <text class="value">{{appointmentInfo.note}}</text>
+      </view>
+    </view>
+
+    <view class="action-section">
+      <!-- 管理员/护工操作按钮 -->
+      <block wx:if="{{isAdmin || isStaff}}">
+        <button 
+          wx:if="{{appointmentInfo.status === 'PENDING'}}"
+          class="action-btn confirm" 
+          bindtap="handleConfirmAppointment"
+        >确认预约</button>
+        
+        <button 
+          wx:if="{{appointmentInfo.canComplete}}"
+          class="action-btn complete" 
+          bindtap="handleCompleteAppointment"
+        >完成服务</button>
+      </block>
+
+      <!-- 所有角色都可以看到的取消按钮（根据条件显示） -->
+      <button 
+        wx:if="{{appointmentInfo.canCancel && appointmentInfo.status !== 'CANCELLED'}}"
+        class="action-btn cancel" 
+        bindtap="handleCancelAppointment"
+      >取消预约</button>
+    </view>
+  </view>
+</view> 

@@ -189,6 +189,16 @@ Component({
         return;
       }
 
+      // 手机号验证
+      const phonePattern = /^1[3-9]\d{9}$/;
+      if (!phonePattern.test(formData.phone)) {
+        wx.showToast({
+          title: '请输入有效的手机号',
+          icon: 'none'
+        });
+        return;
+      }
+
       this.triggerEvent('submit', formData); // 触发提交事件，将表单数据传递出去
     }
   }

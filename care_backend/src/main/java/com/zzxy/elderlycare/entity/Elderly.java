@@ -12,6 +12,7 @@ public class Elderly {
     private String gender; // 性别
     private String birthDate; // 出生日期
     private String idCard; // 身份证号
+    private String phone; // 手机号
     private String bedNumber; // 床位号
     private String checkInDate; // 入住日期
     private Integer caregiverId; // 护工ID

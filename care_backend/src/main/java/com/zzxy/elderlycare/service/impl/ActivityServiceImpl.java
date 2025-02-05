@@ -124,8 +124,12 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public List<Activity> getJoinActivitiesHistory(Integer userId) {
-        List<Activity> dbjoinActivitiesHistory = activityMapper.getJoinActivitiesHistory(userId);
-        return dbjoinActivitiesHistory;
+        return activityMapper.getJoinActivitiesHistory(userId);
+    }
+
+    @Override
+    public List<Activity> getAllActivities() {
+        return activityMapper.getAllActivities();
     }
 
 }

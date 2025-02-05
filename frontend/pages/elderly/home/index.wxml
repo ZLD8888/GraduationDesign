@@ -5,7 +5,7 @@
       <text>近期活动</text>
     </navigator>
 
-    <navigator url="/pages/service/appointment/index" class="grid-item">
+    <navigator url="/pages/appointment/list/index" class="grid-item">
       <image src="/images/service.png" mode="aspectFit"></image>
       <text>服务预约</text>
     </navigator>

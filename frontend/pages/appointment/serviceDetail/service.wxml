@@ -1,0 +1,99 @@
+<view class="container">
+  <view class="service-detail" wx:if="{{service}}">
+    <image class="service-image" src="{{service.imageUrl}}" mode="aspectFit"></image>
+    
+    <view class="service-info">
+      <view class="header">
+        <text class="name">{{service.name}}</text>
+        <text class="price">¥{{service.price}}/次</text>
+      </view>
+      
+      <view class="description">
+        <text class="section-title">服务描述</text>
+        <text class="desc-text">{{service.description}}</text>
+      </view>
+
+      <!-- 预约表单 -->
+      <block wx:if="{{canBook}}">
+        <view class="booking-form">
+          <view class="booking-header">
+            <text class="section-title">预约信息</text>
+            <text class="service-selected">已选：{{service.name}}</text>
+          </view>
+          
+          <view class="form-item">
+            <view class="form-label">
+              <text class="label-icon">📅</text>
+              <text class="label-text">选择日期</text>
+            </view>
+            <view class="available-days">
+              可预约日期：
+              <block wx:for="{{availableDays}}" wx:key="*this">
+                <text wx:if="{{item === '0'}}">周日</text>
+                <text wx:elif="{{item === '1'}}">周一</text>
+                <text wx:elif="{{item === '2'}}">周二</text>
+                <text wx:elif="{{item === '3'}}">周三</text>
+                <text wx:elif="{{item === '4'}}">周四</text>
+                <text wx:elif="{{item === '5'}}">周五</text>
+                <text wx:elif="{{item === '6'}}">周六</text>
+                <text wx:if="{{index < availableDays.length - 1}}">、</text>
+              </block>
+            </view>
+            <picker mode="date" 
+              value="{{selectedDate}}" 
+              start="{{today}}" 
+              end="{{maxDate}}" 
+              bindchange="handleDateChange"
+            >
+              <view class="picker">{{selectedDate || '请选择日期'}}</view>
+            </picker>
+          </view>
+
+          <view class="form-item" wx:if="{{selectedDate}}">
+            <view class="form-label">
+              <text class="label-icon">🕒</text>
+              <text class="label-text">选择时间 ({{startTime}}-{{endTime}})</text>
+            </view>
+            <view class="appointment-info">
+              <text>每日最大预约数: {{maxAppointments}}</text>
+              <text>已预约: {{appointedCount}}</text>
+              <text>剩余可预约: {{remainingSlots}}</text>
+            </view>
+            <block wx:if="{{remainingSlots > 0}}">
+              <view class="time-slots" wx:if="{{timeList && timeList.length > 0}}">
+                <view 
+                  wx:for="{{timeList}}" 
+                  wx:key="*this"
+                  class="time-slot {{selectedTime === item ? 'selected' : ''}}"
+                  bindtap="handleTimeSelect"
+                  data-time="{{item}}"
+                >
+                  <text>{{item}}</text>
+                </view>
+              </view>
+              <text class="no-slots" wx:else>当前日期没有可用时间段</text>
+            </block>
+            <view class="no-slots" wx:else>
+              当日预约已满，请选择其他日期
+            </view>
+          </view>
+
+          <view class="form-item" wx:if="{{isFamily}}">
+            <view class="form-label">
+              <text class="label-icon">👤</text>
+              <text class="label-text">选择老人</text>
+            </view>
+            <picker bindchange="handleElderlyChange" value="{{selectedElderly}}" range="{{boundElderlyList}}" range-key="name">
+              <view class="picker">{{selectedElderly !== '' ? boundElderlyList[selectedElderly].name : '请选择老人'}}</view>
+            </picker>
+          </view>
+
+          <button class="book-btn" bindtap="createAppointment">
+            <text class="btn-text">立即预约</text>
+            <text class="btn-price">¥{{service.price}}</text>
+          </button>
+        </view>
+      </block>
+    </view>
+  </view>
+</view> 

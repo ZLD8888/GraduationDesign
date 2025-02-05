@@ -45,7 +45,7 @@ public class ElderlyServiceImpl implements ElderlyService {
         Elderly dbelderlyByIdCard = elderlyMapper.getElderlyByIdCard(elderly.getIdCard());
         log.info("插入老人成功:{}",dbelderlyByIdCard);
         log.info("插入老人和护工id");
-        elderlyMapper.addElderlyAndUserId(dbelderlyByIdCard.getCaregiverId() , dbelderlyByIdCard.getId());
+        elderlyMapper.addElderlyAndUserId(dbelderlyByIdCard.getCaregiverId() , dbelderlyByIdCard.getIdCard());
     }
 
     @Override

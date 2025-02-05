@@ -19,6 +19,10 @@
         <text class="label">身份证号：</text>
         <text class="value">{{elderlyInfo.idCard}}</text>
       </view>
+      <view class="info-item">
+        <text class="label">手机号：</text>
+        <text class="value">{{elderlyInfo.phone}}</text>
+      </view>
     </view>
 
     <!-- 住院信息 -->
