@@ -85,6 +85,7 @@ Page({
           this.setData({
             boundElderlyList: res.data.data
           });
+          console.log('绑定老人列表:', this.data.boundElderlyList);
         }
       }
     });
@@ -250,9 +251,12 @@ Page({
 
   // 处理老人选择
   handleElderlyChange(e) {
-    const index = e.detail.value;
+    const index = parseInt(e.detail.value, 10);
     this.setData({
       selectedElderly: index
+    }, () => {
+      console.log('选择的老人索引:', this.data.selectedElderly);
+      console.log('绑定老人列表:', this.data.boundElderlyList);
     });
   },
 
@@ -265,6 +269,9 @@ Page({
     const token = wx.getStorageSync('token');
     const userId = wx.getStorageSync('userId');
 
+    console.log('选择的老人索引:', this.data.selectedElderly);
+    console.log('绑定老人列表:', this.data.boundElderlyList);
+
     const appointmentData = {
       appointmentNo: `APPT-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
       serviceId: this.data.service.id,
@@ -272,9 +279,11 @@ Page({
       time: this.data.selectedTime,
       userId: userId,
       elderlyId: this.data.isFamily ? 
-        this.data.boundElderlyList[this.data.selectedElderly].id : 
+        this.data.boundElderlyList[this.data.selectedElderly]?.id : 
         userId
     };
+
+    console.log('选择的老人ID:', this.data.boundElderlyList[this.data.selectedElderly]?.id);
 
     wx.request({
       url: `${app.globalData.baseUrl}/api/services/appointments`,
@@ -318,7 +327,7 @@ Page({
       });
       return false;
     }
-    if (this.data.isFamily && !this.data.selectedElderly) {
+    if (this.data.isFamily && this.data.selectedElderly === '') {
       wx.showToast({
         title: '请选择老人',
         icon: 'none'

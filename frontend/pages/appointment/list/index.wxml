@@ -81,9 +81,9 @@
               <text class="service-name">{{item.serviceName}}</text>
               <text class="appointment-no">预约编号：{{item.appointmentNo}}</text>
             </view>
-          </view>
+          </view> 
           <text class="status {{item.status === 'CONFIRMED' ? 'confirmed' : item.status === 'COMPLETED' ? 'completed' : 'pending'}}">
-            {{item.status === 'CONFIRMED' ? '已确认' : item.status === 'COMPLETED' ? '已完成' : '待确认'}}
+            {{statusMap[item.status]}}
           </text>
         </view>
 
@@ -111,10 +111,9 @@
           <view class="action-buttons">
             <button 
               class="action-btn cancel"
-              wx:if="{{item.status === 'PENDING' || item.status === 'CONFIRMED'}}"
-              wx:if="{{isFamily || isElderly}}"
+              wx:if="{{(item.status === 'PENDING' || item.status === 'CONFIRMED') && (isFamily || isElderly)}}"
               bindtap="cancelAppointment"
-              data-id="{{item.id}}"
+              data-appointment-no="{{item.appointmentNo}}"
             >取消预约</button>
           </view>
         </view>

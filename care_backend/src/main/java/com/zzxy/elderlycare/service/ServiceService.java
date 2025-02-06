@@ -2,6 +2,7 @@ package com.zzxy.elderlycare.service;
 
 import com.zzxy.elderlycare.dto.AppointmentUserDto;
 import com.zzxy.elderlycare.entity.Appointments;
+import com.zzxy.elderlycare.entity.Elderly;
 import com.zzxy.elderlycare.entity.Services;
 
 import java.util.List;
@@ -26,4 +27,20 @@ public interface ServiceService {
     void addAppointment(AppointmentUserDto appointmentUserDto);
 
     List<Appointments> getElderlyAppointments(Integer userID);
+
+    void cancelAppointment(String appointmentNo);
+
+    Appointments getAppointmentByNo(String appointmentNo);
+
+    List<Appointments> getStaffAppointments(Integer staffId);
+    /**
+     * @param userId 用户ID
+     * @return 老人信息
+     * 根据返回的用户ID查询老人信息
+     * */
+    Elderly getElderlyInfoByReturnUserID(Integer userId);
+
+    List<Elderly> getElderlyNameByFamilyId(Integer familyId);
+
+    List<Appointments> getFamilyAppointments(Integer familyId);
 }

@@ -2,6 +2,7 @@ package com.zzxy.elderlycare.service.impl;
 
 import com.zzxy.elderlycare.dto.AppointmentUserDto;
 import com.zzxy.elderlycare.entity.Appointments;
+import com.zzxy.elderlycare.entity.Elderly;
 import com.zzxy.elderlycare.entity.Services;
 import com.zzxy.elderlycare.mapper.ServiceMapper;
 import com.zzxy.elderlycare.service.ServiceService;
@@ -79,6 +80,47 @@ public class ServiceServiceImpl implements ServiceService {
         List<Appointments> elderlyAppointments = serviceMapper.getElderlyAppointments(userID);
         log.info("查询到老人的预约列表：{}",elderlyAppointments);
         return elderlyAppointments;
+    }
+
+    @Override
+    public void cancelAppointment(String appointmentNo) {
+        serviceMapper.cancelAppointment(appointmentNo);
+    }
+
+    @Override
+    public Appointments getAppointmentByNo(String appointmentNo) {
+        Appointments dbappointment = serviceMapper.getAppointmentByNo(appointmentNo);
+        return dbappointment;
+    }
+
+    @Override
+    public List<Appointments> getStaffAppointments(Integer staffId) {
+        List<Appointments> staffAppointments = serviceMapper.getStaffAppointments(staffId);
+        return staffAppointments;
+    }
+
+    /**
+     * @param userId 用户ID
+     * @return 老人信息
+     * 根据返回的用户ID查询老人信息
+     */
+    @Override
+    public Elderly getElderlyInfoByReturnUserID(Integer userId) {
+        Elderly elderly = serviceMapper.getElderlyInfoByReturnUserID(userId);
+        log.info("根据返回的用户ID查询老人信息：{}",elderly);
+        return elderly;
+    }
+
+    @Override
+    public List<Elderly> getElderlyNameByFamilyId(Integer familyId) {
+        List<Elderly> dbelderlyNameByFamilyId = serviceMapper.getElderlyNameByFamilyId(familyId);
+        return dbelderlyNameByFamilyId;
+    }
+
+    @Override
+    public List<Appointments> getFamilyAppointments(Integer familyId) {
+        List<Appointments> familyAppointments = serviceMapper.getFamilyAppointments(familyId);
+        return familyAppointments;
     }
 
 }

@@ -38,7 +38,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    // 统一处理数据加载
+    // 统一加载所有数据
     this.loadAllData();
   },
 
@@ -249,8 +249,9 @@ Page({
    * @param {Object} e - 事件对象
    */
   cancelAppointment(e) {
-    // 获取要取消的预约ID
-    const appointmentId = e.currentTarget.dataset.id;
+    // 获取要取消的预约编号
+    const appointmentNo = e.currentTarget.dataset.appointmentNo;
+    console.log('要取消的预约编号:', appointmentNo);
     wx.showModal({
       title: '确认取消',
       content: '确定要取消这个预约吗？',
@@ -258,21 +259,81 @@ Page({
         if (res.confirm) {
           // 从本地存储中获取token
           const token = wx.getStorageSync('token');
+          
+          // 显示加载提示
+          wx.showLoading({
+            title: '取消中...',
+            mask: true
+          });
+
           wx.request({
-            url: `${app.globalData.baseUrl}/api/services/appointments/${appointmentId}/cancel`,
+            url: `${app.globalData.baseUrl}/api/services/appointments/${appointmentNo}/cancel`,
             method: 'POST',
             header: {
               'Authorization': `Bearer ${token}`
             },
             success: (res) => {
-              if (res.data && res.data.success) {
-                wx.showToast({
-                  title: '取消成功',
-                  icon: 'success'
+              if (res.data && res.data.code === '200') {  // 确保检查正确的响应码
+                // 先更新本地数据
+                const updatedAppointments = this.data.appointments.map(item => {
+                  if (item.appointmentNo === appointmentNo) {
+                    return {
+                      ...item,
+                      status: 'CANCELLED',
+                      statusText: this.data.statusMap['CANCELLED']
+                    };
+                  }
+                  return item;
                 });
-                // 重新加载预约列表
-                this.loadAppointments();
+
+                // 更新本地数据并重新排序
+                this.setData({
+                  appointments: updatedAppointments.sort((a, b) => {
+                    // 定义状态优先级
+                    const statusPriority = {
+                      'CONFIRMED': 1,    // 已确认最优先
+                      'PENDING': 2,      // 待确认次之
+                      'COMPLETED': 3,    // 已完成再次
+                      'CANCELLED': 4     // 已取消最后
+                    };
+
+                    // 获取状态优先级
+                    const priorityA = statusPriority[a.status] || 999;
+                    const priorityB = statusPriority[b.status] || 999;
+
+                    // 首先按状态优先级排序
+                    if (priorityA !== priorityB) {
+                      return priorityA - priorityB;
+                    }
+
+                    // 如果状态相同，则按预约时间排序
+                    const timeA = new Date(`${a.data} ${a.time}`);
+                    const timeB = new Date(`${b.data} ${b.time}`);
+                    return timeA - timeB;
+                  })
+                }, () => {
+                  // 在数据更新完成后显示提示
+                  wx.showToast({
+                    title: '取消成功',
+                    icon: 'success'
+                  });
+                });
+              } else {
+                wx.showToast({
+                  title: res.data.msg || '取消失败',
+                  icon: 'none'
+                });
               }
+            },
+            fail: (error) => {
+              console.error('取消预约失败：', error);
+              wx.showToast({
+                title: '取消失败',
+                icon: 'none'
+              });
+            },
+            complete: () => {
+              wx.hideLoading();
             }
           });
         }
@@ -336,11 +397,10 @@ Page({
   /**
    * 加载预约列表
    */
-  loadAppointments(resolve, reject) {
+  loadAppointments(successCallback, failCallback) {
     const token = wx.getStorageSync('token');
     const userId = wx.getStorageSync('userId');
     
-    // 根据角色决定加载哪些预约
     let url;
     if (this.data.isAdmin) {
         url = `${app.globalData.baseUrl}/api/services/appointments`;
@@ -360,7 +420,7 @@ Page({
         },
         success: (res) => {
             if (res.data && res.data.data) {
-                const appointments = res.data.data.map(item => ({
+                let appointments = res.data.data.map(item => ({
                     appointmentNo: item.appointmentNo,
                     serviceName: item.serviceName,
                     elderlyName: item.elderlyName,
@@ -371,22 +431,54 @@ Page({
                     status: item.status,
                     createTime: item.createTime,
                     statusText: this.data.statusMap[item.status] || item.status,
-                    imageUrl : item.imageUrl
+                    imageUrl: item.imageUrl,
+                    appointmentTime: `${item.data} ${item.time}`
                 }));
-                
-                this.setData({ appointments });
-                resolve && resolve();
+
+                // 修改排序逻辑
+                appointments.sort((a, b) => {
+                    // 定义状态优先级
+                    const statusPriority = {
+                        'CONFIRMED': 1,    // 已确认最优先
+                        'PENDING': 2,      // 待确认次之
+                        'COMPLETED': 3,    // 已完成再次
+                        'CANCELLED': 4     // 已取消最后
+                    };
+
+                    // 获取状态优先级，如果状态不存在则赋予最低优先级
+                    const priorityA = statusPriority[a.status] || 999;
+                    const priorityB = statusPriority[b.status] || 999;
+
+                    // 首先按状态优先级排序
+                    if (priorityA !== priorityB) {
+                        return priorityA - priorityB;
+                    }
+
+                    // 如果状态相同，则按预约时间排序
+                    const timeA = new Date(`${a.data} ${a.time}`);
+                    const timeB = new Date(`${b.data} ${b.time}`);
+                    return timeA - timeB;
+                });
+
+                console.log('排序后的预约列表:', appointments);
+                this.setData({ 
+                    appointments 
+                }, () => {
+                    if (successCallback) {
+                        successCallback();
+                    }
+                });
             } else {
-                reject && reject(new Error('加载预约列表失败'));
+                if (failCallback) {
+                    failCallback(new Error('加载预约列表失败'));
+                }
             }
         },
         fail: (error) => {
             console.error('加载预约列表失败：', error);
-            wx.showToast({
-                title: '加载预约失败',
-                icon: 'none'
-            });
-            reject && reject(error);
+            if (failCallback) {
+                failCallback(error);
+            }
         }
     });
   },
