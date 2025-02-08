@@ -91,4 +91,7 @@ public interface ActivityMapper {
 
     @Select("SELECT * FROM activities")
     List<Activity> getAllActivities();
+
+    @Select("select * from activities where start_time >= now() - interval 1 hour")
+    List<Activity> getUpcomingActivities();
 }

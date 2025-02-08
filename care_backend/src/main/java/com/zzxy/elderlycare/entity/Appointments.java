@@ -10,6 +10,7 @@ public class Appointments {
     private Integer serviceId;
     private String serviceName;
     private String elderlyName;
+    private Integer userId;
     private String userName;
     private Double price;
     private String elderlyIdCard;

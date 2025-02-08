@@ -132,4 +132,13 @@ public class ActivityServiceImpl implements ActivityService {
         return activityMapper.getAllActivities();
     }
 
+    /**
+     *  获取即将开始的活动列表(一个小时)
+     */
+    @Override
+    public List<Activity> getUpcomingActivities() {
+        List<Activity> dbupcomingActivities = activityMapper.getUpcomingActivities();
+        return dbupcomingActivities;
+    }
+
 }

@@ -258,4 +258,15 @@ public class ServiceController {
         log.info("获取到的家属预约列表: {}", appointments);
         return Result.success("200", "查询成功", appointments);
     }
+
+    @GetMapping("/appointments/check")
+    public Result checkTodayAppointment(
+            @RequestParam("serviceId") Long serviceId,
+            @RequestParam("userId") Long userId,
+            @RequestParam(value = "elderlyId", required = false) Long elderlyId,
+            @RequestParam("date") String date
+           ) {
+        boolean hasAppointment = serviceService.hasTodayAppointment(serviceId, userId, elderlyId, date);
+        return Result.success("200", "查询成功", hasAppointment);
+    }
 }

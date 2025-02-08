@@ -75,4 +75,17 @@ public interface ServiceMapper {
                      inner join elderly_info e on au.elderly_id = e.id
                      where au.elderly_id in (select id from elderly_info where id_card in (select elderly_id from family_elderly where family_userid = #{familyId}))""")
     List<Appointments> getFamilyAppointments(Integer familyId);
+
+
+    @Select("SELECT COUNT(*) FROM appointments_user " +
+            "WHERE service_id = #{serviceId} " +
+            "AND data = #{date} " +
+            "AND status != 'CANCELLED' " +
+            "AND (user_id = #{userId} " +
+            "OR (#{elderlyId} IS NOT NULL AND elderly_id = #{elderlyId}))")
+    int countAppointmentsByDateTime(
+            @Param("serviceId") Long serviceId,
+            @Param("userId") Long userId,
+            @Param("elderlyId") Long elderlyId,
+            @Param("date") String date);
 }

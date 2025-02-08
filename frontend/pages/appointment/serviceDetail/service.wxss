@@ -248,4 +248,14 @@
 
 .appointment-info text:not(:last-child) {
   border-right: 1px solid #eee;
+}
+
+.appointment-tip {
+  text-align: center;
+  color: #ff4d4f;
+  font-size: 28rpx;
+  padding: 20rpx;
+  background: #fff1f0;
+  border-radius: 8rpx;
+  margin: 20rpx 0;
 } 

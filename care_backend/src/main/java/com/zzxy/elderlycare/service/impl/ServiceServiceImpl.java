@@ -122,5 +122,8 @@ public class ServiceServiceImpl implements ServiceService {
         List<Appointments> familyAppointments = serviceMapper.getFamilyAppointments(familyId);
         return familyAppointments;
     }
-
+    @Override
+    public boolean hasTodayAppointment(Long serviceId, Long userId, Long elderlyId, String date) {
+        return serviceMapper.countAppointmentsByDateTime(serviceId, userId, elderlyId, date) > 0;
+    }
 }

@@ -24,4 +24,6 @@ public interface UserMapper {
 
     @Select("select * from users where id = #{id}")
     User getCaregiverById(Integer id);
+    @Select("select * from users")
+    List<User> getAllUsers();
 }

@@ -43,4 +43,6 @@ public interface ServiceService {
     List<Elderly> getElderlyNameByFamilyId(Integer familyId);
 
     List<Appointments> getFamilyAppointments(Integer familyId);
+
+    boolean hasTodayAppointment(Long serviceId, Long userId, Long elderlyId, String date);
 }

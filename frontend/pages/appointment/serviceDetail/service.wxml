@@ -73,7 +73,7 @@
               </view>
               <text class="no-slots" wx:else>当前日期没有可用时间段</text>
             </block>
-            <view class="no-slots" wx:else>
+            <view class="no-slots" wx:elif="{{selectedDate === today}}">
               当日预约已满，请选择其他日期
             </view>
           </view>
@@ -88,10 +88,24 @@
             </picker>
           </view>
 
-          <button class="book-btn" bindtap="createAppointment">
-            <text class="btn-text">立即预约</text>
-            <text class="btn-price">¥{{service.price}}</text>
-          </button>
+          <!-- 根据预约状态显示按钮 -->
+          <block wx:if="{{selectedDate && selectedTime}}">
+            <block wx:if="{{!hasAppointmentToday}}">
+              <button class="book-btn" bindtap="createAppointment">
+                <text class="btn-text">立即预约</text>
+                <text class="btn-price">¥{{service.price}}</text>
+              </button>
+            </block>
+            <block wx:else>
+              <view class="appointment-tip">该时间段已预约服务</view>
+            </block>
+          </block>
+          <block wx:else>
+            <button class="book-btn" bindtap="createAppointment">
+              <text class="btn-text">立即预约</text>
+              <text class="btn-price">¥{{service.price}}</text>
+            </button>
+          </block>
         </view>
       </block>
     </view>

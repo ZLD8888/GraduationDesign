@@ -25,45 +25,7 @@
   </view>
 
   <!-- 预约表单（仅老人和家属可见） -->
-  <block wx:if="{{!isAdmin && !isStaff}}">
-    <view class="booking-form" wx:if="{{selectedService}}" id="bookingForm">
-      <view class="form-header">
-        <text class="selected-service">已选择：{{selectedService.name}}</text>
-        <text class="service-price">¥{{selectedService.price}}/次</text>
-      </view>
-      <view class="form-item">
-        <text class="label">选择日期：</text>
-        <picker mode="date" value="{{selectedDate}}" start="{{today}}" end="{{maxDate}}" bindchange="handleDateChange">
-          <view class="picker">{{selectedDate || '请选择日期'}}</view>
-        </picker>
-      </view>
-
-      <view class="form-item" wx:if="{{selectedDate}}">
-        <text class="label">选择时间段：</text>
-        <view class="time-slots">
-          <view 
-            wx:for="{{timeSlots}}" 
-            wx:key="id"
-            class="time-slot {{item.remainingSlots === 0 ? 'disabled' : ''}} {{selectedTimeSlot === item.id ? 'selected' : ''}}"
-            bindtap="handleTimeSlotSelect"
-            data-slot="{{item}}"
-          >
-            <text>{{item.startTime}}-{{item.endTime}}</text>
-            <text class="remaining">(剩余{{item.remainingSlots}}次)</text>
-          </view>
-        </view>
-      </view>
-
-      <view class="form-item" wx:if="{{isFamily}}">
-        <text class="label">选择老人：</text>
-        <picker bindchange="handleElderlyChange" value="{{selectedElderly}}" range="{{boundElderlyList}}" range-key="name">
-          <view class="picker">{{selectedElderly ? boundElderlyList[selectedElderly].name : '请选择老人'}}</view>
-        </picker>
-      </view>
-
-      <button class="submit-btn" bindtap="createAppointment">确认预约</button>
-    </view>
-  </block>
+  
 
   <!-- 预约列表 -->
   <view class="appointment-section">

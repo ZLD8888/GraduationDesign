@@ -54,4 +54,9 @@ public interface ActivityService {
      * @return 所有活动列表
      */
     List<Activity> getAllActivities();
+    /**
+     * 获取即将开始的活动列表(一个小时)
+     * @return 即将开始的活动列表
+     */
+    List<Activity> getUpcomingActivities();
 }

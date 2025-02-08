@@ -19,7 +19,8 @@ Page({
     startTime: '',
     endTime: '',
     timeList: [],
-    appointedCount: 0
+    appointedCount: 0,
+    hasAppointmentToday: false, // 新增：今日是否已预约
   },
 
   onLoad(options) {
@@ -39,6 +40,7 @@ Page({
     }
     
     this.loadServiceDetail(id);
+
   },
 
   loadServiceDetail(id) {
@@ -207,19 +209,14 @@ Page({
   // 处理日期选择
   handleDateChange(e) {
     const selectedDate = e.detail.value;
-    
-    // 检查选择的日期是否在可预约日期内
-    const dayOfWeek = new Date(selectedDate).getDay().toString();
-    if (!this.data.availableDays.includes(dayOfWeek)) {
-      wx.showToast({
-        title: '该日期不可预约',
-        icon: 'none'
-      });
-      return;
-    }
+    this.setData({
+      selectedDate: selectedDate,
+      selectedTime: '', // 清空已选时间
+      timeList: [] // 清空时间列表
+    });
 
-    this.setData({ selectedDate });
-    // 加载选中日期的时间段信息
+
+    // 加载选中日期的时间段
     this.loadTimeSlots(selectedDate);
   },
 
@@ -257,6 +254,8 @@ Page({
     }, () => {
       console.log('选择的老人索引:', this.data.selectedElderly);
       console.log('绑定老人列表:', this.data.boundElderlyList);
+      // 重新检查今日预约状态
+      this.checkTodayAppointment(this.data.service.id);
     });
   },
 
@@ -365,6 +364,50 @@ Page({
     
     this.setData({
       selectedTime: selectedTime
+    }, () => {
+      // 选择时间后检查预约状态
+      if (this.data.selectedDate && this.data.selectedTime) {
+        this.checkTodayAppointment(this.data.service.id);
+      }
     });
-  }
+  },
+
+  // 新增：检查今日是否已预约
+  checkTodayAppointment(serviceId) {
+    const token = wx.getStorageSync('token');
+    const userId = wx.getStorageSync('userId');
+    const elderlyId = this.data.isFamily ? 
+      this.data.boundElderlyList[this.data.selectedElderly]?.id : 
+      userId;
+    
+    console.log('检查预约状态:', {
+      serviceId,
+      userId,
+      elderlyId,
+      date: this.data.selectedDate,
+      time: this.data.selectedTime
+    });
+
+    wx.request({
+      url: `${app.globalData.baseUrl}/api/services/appointments/check`,
+      method: 'GET',
+      data: {
+        serviceId: serviceId,
+        userId: userId,
+        elderlyId: elderlyId,
+        date: this.data.selectedDate
+        // time: this.data.selectedTime
+      },
+      header: {
+        'Authorization': `Bearer ${token}`
+      },
+      success: (res) => {
+        if (res.data.code === '200') {
+          this.setData({
+            hasAppointmentToday: res.data.data
+          });
+        }
+      }
+    });
+  },
 }); 

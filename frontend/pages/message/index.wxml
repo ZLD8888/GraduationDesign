@@ -1,4 +1,11 @@
 <view class="container">
+  <!-- 管理员发送系统通知按钮 -->
+  <view class="admin-actions" wx:if="{{isAdmin}}">
+    <button class="send-notice-btn" bindtap="showSendNoticeModal">
+      发送系统通知
+    </button>
+  </view>
+
   <!-- 消息类型切换 -->
   <view class="message-tabs">
     <view 
@@ -31,5 +38,29 @@
   <view class="empty-state" wx:if="{{messages.length === 0}}">
     <image src="/images/empty-message.png" mode="aspectFit"></image>
     <text>暂无消息</text>
+  </view>
+
+  <!-- 发送系统通知的模态框 -->
+  <view class="modal" wx:if="{{showNoticeModal}}">
+    <view class="modal-content">
+      <view class="modal-header">
+        <text>发送系统通知</text>
+        <view class="close-btn" bindtap="hideModal">×</view>
+      </view>
+      <view class="modal-body">
+        <input class="notice-input" 
+               placeholder="请输入通知标题" 
+               model:value="{{noticeTitle}}"
+        />
+        <textarea class="notice-textarea" 
+                  placeholder="请输入通知内容" 
+                  model:value="{{noticeContent}}"
+        />
+      </view>
+      <view class="modal-footer">
+        <button class="cancel-btn" bindtap="hideModal">取消</button>
+        <button class="confirm-btn" bindtap="sendNotice">发送</button>
+      </view>
+    </view>
   </view>
 </view> 
