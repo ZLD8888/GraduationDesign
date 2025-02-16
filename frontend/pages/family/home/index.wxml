@@ -15,7 +15,7 @@
       <text>服务预约</text>
     </navigator>
 
-    <navigator url="/pages/family/elderly/health/monitor" class="grid-item">
+    <navigator url="/pages/health/index" class="grid-item">
       <image src="/images/health.png" mode="aspectFit"></image>
       <text>老人健康监控</text>
     </navigator>

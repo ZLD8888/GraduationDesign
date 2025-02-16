@@ -18,16 +18,14 @@
     "pages/elderly/add/add",
     "pages/elderly/detail/detail",
     "pages/elderly/edit/edit",
-    "pages/elderly/health/list",
-    "pages/elderly/health/detail",
-    "pages/elderly/health/add",
     "pages/family/elderly/info/index",
     "pages/activities/history/history",
     "pages/staff/elderly/info/index",
     "pages/appointment/list/index",
     "pages/appointment/detail/index",
     "pages/appointment/settings/index",
-    "pages/appointment/serviceDetail/service"
+    "pages/appointment/serviceDetail/service",
+    "pages/health/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -83,5 +81,19 @@
     "elderly-form": "/components/elderly-form/index",
     "health-record-form": "/components/health-record-form/index",
     "activity-form": "/components/activity-form/index"
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "connectSocket": 10000,
+    "uploadFile": 10000,
+    "downloadFile": 10000
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于获取附近的服务"
+    },
+    "scope.userInfo": {
+      "desc": "用于完善用户资料"
+    }
   }
 } 

@@ -10,10 +10,11 @@
       <text>服务预约</text>
     </navigator>
 
-    <navigator url="/pages/elderly/health/self" class="grid-item">
+    <navigator url="/pages/health/index" class="grid-item">
       <image src="/images/health.png" mode="aspectFit"></image>
       <text>自己健康监控</text>
     </navigator>
+
   </view>
 
   <view class="recent-section">

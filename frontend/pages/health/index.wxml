@@ -1,0 +1,75 @@
+<view class="container">
+  <!-- 老人选择器 (仅管理员/护工/家属可见) -->
+  <view class="elderly-selector" wx:if="{{role !== 'ELDERLY'}}">
+    <picker 
+      bindchange="handleElderlyChange" 
+      value="{{selectedElderlyIndex}}" 
+      range="{{elderlyList}}" 
+      range-key="name">
+      <view class="picker">
+        当前查看: {{elderlyList[selectedElderlyIndex].name}}
+        <text class="picker-arrow">▼</text>
+      </view>
+    </picker>
+  </view>
+
+  <!-- 实时数据展示区域 -->
+  <view class="real-time-data">
+    <view class="data-card heart-rate">
+      <view class="card-title">
+        <text class="icon">❤️</text>
+        <text>实时心率</text>
+      </view>
+      <view class="data-value">
+        <text class="number">{{heartRate || '--'}}</text>
+        <text class="unit">次/分</text>
+      </view>
+      <text class="update-time" wx:if="{{lastUpdateTime}}">
+        更新时间: {{lastUpdateTime}}
+      </text>
+    </view>
+  </view>
+
+  <!-- 图表展示区域 -->
+  <view class="chart-container">
+    <view class="chart-header">
+      <text class="chart-title">心率趋势</text>
+      <view class="time-selector">
+        <text class="{{timeRange === 'day' ? 'active' : ''}}" 
+              bindtap="changeTimeRange" 
+              data-range="day">24小时</text>
+        <text class="{{timeRange === 'week' ? 'active' : ''}}" 
+              bindtap="changeTimeRange" 
+              data-range="week">7天</text>
+      </view>
+    </view>
+    <view class="chart-content">
+      <ec-canvas id="heart-rate-chart" 
+                canvas-id="heart-rate-chart" 
+                ec="{{ecOption}}">
+      </ec-canvas>
+    </view>
+  </view>
+
+  <!-- 异常提醒区域 -->
+  <view class="alert-section" wx:if="{{alerts.length > 0}}">
+    <view class="section-title">异常提醒</view>
+    <view class="alert-list">
+      <view class="alert-item" 
+            wx:for="{{alerts}}" 
+            wx:key="id">
+        <text class="alert-icon">⚠️</text>
+        <view class="alert-content">
+          <text class="alert-message">{{item.message}}</text>
+          <text class="alert-time">{{item.time}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 连接状态提示 -->
+  <view class="connection-status {{isConnected ? 'connected' : 'disconnected'}}">
+    <text class="status-dot"></text>
+    <text class="status-text">{{isConnected ? '数据连接正常' : '正在重新连接...'}}</text>
+  </view>
+</view> 

@@ -19,9 +19,9 @@
       <text>预约信息管理</text>
     </navigator>
 <!-- 暂时没有此页面 -->
-    <navigator url="/pages/health/monitor/index" class="grid-item">
+    <navigator url="/pages/health/index" class="grid-item">
       <image src="/images/health.png" mode="aspectFit"></image>
-      <text>监看老人健康监控</text>
+      <text>老人健康监控</text>
     </navigator>
 <!-- 暂时没有此页面 -->
     <navigator url="/pages/service/list/index" class="grid-item"> 
