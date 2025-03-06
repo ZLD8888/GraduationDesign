@@ -54,11 +54,35 @@
 }
 
 .chart-container {
-  background: white;
+  width: 100%;
+  height: 400rpx;
+  background: #fff;
   border-radius: 16rpx;
-  padding: 24rpx;
-  margin-bottom: 30rpx;
-  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+  margin: 20rpx;
+  padding: 20rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.chart-content {
+  width: 100%;
+  height: 300rpx;
+  position: relative;
+}
+
+.chart-content .no-data-text {
+  color: #999;
+  font-size: 28rpx;
+}
+
+.canvas-container {
+  width: 100%;
+  height: 100%;
+}
+
+ec-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .chart-header {
@@ -89,11 +113,6 @@
 .time-selector text.active {
   background: #1296db;
   color: white;
-}
-
-.chart-content {
-  width: 100%;
-  height: 400rpx;
 }
 
 .alert-section {
@@ -197,4 +216,9 @@
   font-size: 24rpx;
   color: #999;
   margin-left: 8rpx;
+}
+
+.no-data {
+  color: #999;
+  font-size: 48rpx;
 } 

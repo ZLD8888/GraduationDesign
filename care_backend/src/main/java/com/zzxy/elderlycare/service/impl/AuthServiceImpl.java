@@ -24,10 +24,10 @@ public class AuthServiceImpl implements AuthService {
         UserLoginDto dblogin = authMapper.login(userLoginDto);
         logger.info("dblogin:{}",dblogin);
         if (dblogin == null) {
-            throw new ServiceException("403","用户不存在"); //正式上线要改成用户名或密码错误
+            return null;
         }
         if (!userLoginDto.getPassword().equals(dblogin.getPassword())) {
-            throw new ServiceException("403","密码错误"); //正式上线要改成用户名或密码错误
+            return null;
         }
         // 生成token
         String token = jwtUtils.generateToken(dblogin.getPhone());

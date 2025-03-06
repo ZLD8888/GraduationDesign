@@ -1,7 +1,11 @@
 <view class="container">
   <!-- 老人选择器 (仅管理员/护工/家属可见) -->
   <view class="elderly-selector" wx:if="{{role !== 'ELDERLY'}}">
+    <view wx:if="{{!elderlyList.length}}" class="no-data">
+      加载中...
+    </view>
     <picker 
+      wx:else
       bindchange="handleElderlyChange" 
       value="{{selectedElderlyIndex}}" 
       range="{{elderlyList}}" 
@@ -15,18 +19,16 @@
 
   <!-- 实时数据展示区域 -->
   <view class="real-time-data">
-    <view class="data-card heart-rate">
+    <view class="data-card heart-rate {{heartRate === '--' ? 'no-data' : ''}}">
       <view class="card-title">
         <text class="icon">❤️</text>
         <text>实时心率</text>
       </view>
       <view class="data-value">
-        <text class="number">{{heartRate || '--'}}</text>
-        <text class="unit">次/分</text>
+        <text class="number">{{heartRate}}</text>
+        <text class="unit" wx:if="{{heartRate !== '--'}}">次/分</text>
       </view>
-      <text class="update-time" wx:if="{{lastUpdateTime}}">
-        更新时间: {{lastUpdateTime}}
-      </text>
+      <text class="update-time">{{lastUpdateTime}}</text>
     </view>
   </view>
 
@@ -44,10 +46,12 @@
       </view>
     </view>
     <view class="chart-content">
-      <ec-canvas id="heart-rate-chart" 
-                canvas-id="heart-rate-chart" 
-                ec="{{ecOption}}">
-      </ec-canvas>
+      <ec-canvas 
+        id="mychart-dom-line" 
+        canvas-id="mychart-line" 
+        ec="{{ ec }}"
+        force-use-old-canvas="true"
+      ></ec-canvas>
     </view>
   </view>
 
@@ -68,8 +72,8 @@
   </view>
 
   <!-- 连接状态提示 -->
-  <view class="connection-status {{isConnected ? 'connected' : 'disconnected'}}">
+  <!-- <view class="connection-status {{isConnected ? 'connected' : 'disconnected'}}">
     <text class="status-dot"></text>
     <text class="status-text">{{isConnected ? '数据连接正常' : '正在重新连接...'}}</text>
-  </view>
+  </view> -->
 </view> 

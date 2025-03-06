@@ -2,15 +2,19 @@ package com.zzxy.elderlycare.service.impl;
 
 import com.zzxy.elderlycare.entity.Elderly;
 import com.zzxy.elderlycare.entity.HealthData;
+import com.zzxy.elderlycare.event.HealthDataEvent;
 import com.zzxy.elderlycare.mapper.HealthDataMapper;
+import com.zzxy.elderlycare.mapper.ElderlyMapper;
 import com.zzxy.elderlycare.service.HealthDataService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 @Slf4j
 @Service
@@ -20,7 +24,10 @@ public class HealthDataServiceImpl implements HealthDataService {
     private HealthDataMapper healthDataMapper;
 
     @Autowired
-    private SimpMessagingTemplate messagingTemplate;
+    private ElderlyMapper elderlyMapper;
+
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
 
     @Override
     public void saveHealthData(HealthData data) {
@@ -46,22 +53,18 @@ public class HealthDataServiceImpl implements HealthDataService {
 
     @Override
     public void handleRealTimeData(HealthData data) {
-        // 保存数据
-        saveHealthData(data);
-        
-        // 推送数据给前端
-        messagingTemplate.convertAndSend(
-            "/topic/health/" + data.getUserId(), 
-            data
-        );
-        
-        // 如果是异常数据,额外推送警报
-        if (data.getIsAbnormal()) {
-            messagingTemplate.convertAndSend(
-                "/topic/alert/" + data.getUserId(),
-                createAlertMessage(data)
-            );
-        }
+        // 保存数据到数据库
+        healthDataMapper.insert(data);
+
+        // 构造消息
+        Map<String, Object> message = new HashMap<>();
+        message.put("heartRate", data.getHeartRate());
+        message.put("timestamp", data.getTimestamp());
+        message.put("isAbnormal", data.getIsAbnormal());
+        message.put("type", "REAL_TIME_DATA");
+
+        // 发布事件
+        eventPublisher.publishEvent(new HealthDataEvent(this, data.getUserId().toString(), message));
     }
 
     @Override
@@ -84,11 +87,57 @@ public class HealthDataServiceImpl implements HealthDataService {
         return healthDataMapper.getElderlyById(elderlyId);
     }
 
+    @Override
+    public boolean checkDeviceBind(Long elderlyId) {
+        return healthDataMapper.checkDeviceBind(elderlyId) != null;
+    }
+
+    @Override
+    public void bindDevice(Long elderlyId) {
+        // 获取当前最大设备ID
+        Integer maxDeviceId = healthDataMapper.getMaxDeviceId();
+        int newDeviceId = (maxDeviceId == null ? 0 : maxDeviceId) + 1;
+        
+        // 绑定新设备
+        healthDataMapper.bindDevice(elderlyId, String.valueOf(newDeviceId));
+    }
+
+    @Override
+    public List<Elderly> getAllElderlyBindList() {
+        return healthDataMapper.getAllElderlyBindList();
+    }
+
+    @Override
+    public HealthData getLatestHealthData(Long elderlyId) {
+        HealthData latestData = healthDataMapper.findLatestByElderlyId(elderlyId);
+        if (latestData != null) {
+            // 构造消息
+            Map<String, Object> message = new HashMap<>();
+            message.put("heartRate", latestData.getHeartRate());
+            message.put("timestamp", latestData.getTimestamp());
+            message.put("isAbnormal", latestData.getIsAbnormal());
+            message.put("type", "LATEST_DATA");
+
+            // 发布事件
+            eventPublisher.publishEvent(new HealthDataEvent(this, elderlyId.toString(), message));
+        }
+        return latestData;
+    }
+
     private boolean isAbnormalHeartRate(Integer heartRate) {
         return heartRate < 60 || heartRate > 100;
     }
 
-    private String createAlertMessage(HealthData data) {
-        return String.format("检测到异常心率: %d次/分", data.getHeartRate());
+    private void checkAndSendAlert(HealthData healthData) {
+        Map<String, Object> alert = new HashMap<>();
+        alert.put("type", "ALERT");
+        alert.put("message", String.format(
+            "异常心率警报：%d 次/分钟", 
+            healthData.getHeartRate()
+        ));
+        alert.put("timestamp", healthData.getCreateTime());
+        alert.put("heartRate", healthData.getHeartRate());
+        
+        eventPublisher.publishEvent(new HealthDataEvent(this, healthData.getUserId().toString(), alert));
     }
 } 

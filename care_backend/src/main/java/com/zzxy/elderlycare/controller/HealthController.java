@@ -70,6 +70,7 @@ public class HealthController {
     public Result getElderlyList(
             @RequestParam(required = false) String role,
             @RequestParam(required = false) Long userId) {
+        log.info("前端传回来的用户角色:{}和用户ID:{}", role, userId);
         try {
             List<Elderly> elderlyList;
             
@@ -85,16 +86,61 @@ public class HealthController {
             } else {
                 return Result.error("400", "无效的用户角色");
             }
-
+            log.info("获取老人列表成功");
             return Result.success(
                 "200",
                 "获取老人列表成功",
                 elderlyList
             );
+
         } catch (Exception e) {
             log.error("获取老人列表失败", e);
             return Result.error("500", "获取老人列表失败");
         }
     }
-    
+
+    @GetMapping("/bind")
+    public Result checkDeviceBind(@RequestParam Long elderlyId) {
+        try {
+            boolean isBound = healthDataService.checkDeviceBind(elderlyId);
+            return Result.success(
+                "200",
+                "获取设备绑定状态成功",
+                isBound
+            );
+        } catch (Exception e) {
+            log.error("获取设备绑定状态失败", e);
+            return Result.error("500", "获取设备绑定状态失败");
+        }
+    }
+
+    @PostMapping("/bind")
+    public Result bindDevice(@RequestParam(required = true) Long elderlyId) {
+        try {
+            if (elderlyId == null || elderlyId <= 0) {
+                return Result.error("400", "无效的老人ID");
+            }
+            
+            // 检查老人是否存在
+            Elderly elderly = healthDataService.getElderlyById(elderlyId);
+            if (elderly == null) {
+                return Result.error("404", "老人不存在");
+            }
+            
+            // 检查是否已经绑定
+            if (healthDataService.checkDeviceBind(elderlyId)) {
+                return Result.error("400", "该老人已绑定设备");
+            }
+            
+            healthDataService.bindDevice(elderlyId);
+            return Result.success(
+                "200",
+                "设备绑定成功",
+                true
+            );
+        } catch (Exception e) {
+            log.error("设备绑定失败", e);
+            return Result.error("500", "设备绑定失败");
+        }
+    }
 } 

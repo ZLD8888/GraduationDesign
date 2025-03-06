@@ -14,7 +14,13 @@ import java.time.LocalDateTime;
 @Slf4j
 @Service
 public class HuaweiHealthService {
+    /*
+     * 注意：由于暂时无法获取华为健康API密钥，该服务暂时停用
+     * 当前使用 MockHealthDataService 生成模拟数据
+     * 等获取到华为健康API密钥后，可以取消注释下面的代码并停用 MockHealthDataService
+     */
 
+    /*
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
@@ -68,4 +74,5 @@ public class HuaweiHealthService {
     private String createAlertMessage(HealthData data) {
         return String.format("检测到异常心率: %d次/分", data.getHeartRate());
     }
+    */
 } 

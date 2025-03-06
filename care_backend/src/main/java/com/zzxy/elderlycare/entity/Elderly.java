@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class Elderly {
-    private Integer id; // 主键
+    private Long id; // 主键
     private String name; // 姓名
     private String gender; // 性别
     private String birthDate; // 出生日期
@@ -22,4 +22,5 @@ public class Elderly {
     private String emergencyContactPhone; // 紧急联系人电话
     private LocalDateTime createdAt; // 创建时间
     private LocalDateTime updatedAt; // 更新时间
+    private Long elderlyUsersId; // 老人用户ID
 }

@@ -30,7 +30,7 @@ public class AuthController {
 //            throw new RuntimeException("手机号格式错误");
 //        }
         if (userLoginDto.getPassword().length() < 6 || userLoginDto.getPassword().length() > 16) {
-            throw new RuntimeException("密码长度错误");
+            return Result.error("403","密码长度错误");
         }
         String token = authService.login(userLoginDto);
         if (token == null) {

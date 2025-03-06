@@ -183,7 +183,7 @@ public class ServiceController {
         Elderly elderly = serviceService.getElderlyInfoByReturnUserID(appointmentUserDto.getUserId());
         log.info("老人信息:{}",elderly);
         if (elderly != null) {
-            appointmentUserDto.setElderlyId(elderly.getId());
+            appointmentUserDto.setElderlyId(Math.toIntExact(elderly.getId()));
             serviceService.addAppointment(appointmentUserDto);
         }else {
             serviceService.addAppointment(appointmentUserDto);

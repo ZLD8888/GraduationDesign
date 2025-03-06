@@ -70,6 +70,11 @@ public class UserServiceImpl implements UserSersive, UserDetailsService {
     }
 
     @Override
+    public Integer getIdByPhone(String phone) {
+        return userMapper.getIdByPhone(phone);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String phone) throws UsernameNotFoundException {
         User user = userMapper.getUserByPhone(phone); // 确保这个方法能正确返回用户
         if (user == null) {

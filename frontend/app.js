@@ -1,9 +1,16 @@
 App({
   globalData: {
     baseUrl: 'http://localhost:8080', // 后端接口基础URL
+    wsUrl: 'ws://localhost:8080', // WebSocket URL
+    // baseUrl: 'https://your-production-domain.com',  // 生产环境
+    // wsUrl: 'wss://your-production-domain.com',      // 生产环境 WebSocket URL
     userInfo: null,
     token: null,
-    userRole: null
+    userRole: null,
+    // huaweiHealth: {
+    //   appId: '申请到的华为应用ID',
+    //   appSecret: '申请到的应用密钥'
+    // }
   },
 
   onLaunch() {
@@ -42,6 +49,8 @@ App({
     const pages = tabBarPages[userRole] || [];
     this.globalData.tabBarPages = pages;
   
+    // 初始化华为健康服务
+    this.initHuaweiHealth();
   },
 
   checkToken() {
@@ -72,6 +81,22 @@ App({
     this.globalData.userInfo = null;
     wx.reLaunch({
       url: '/pages/login/login'
+    });
+  },
+
+  initHuaweiHealth() {
+    const { appId, appSecret } = this.globalData.huaweiHealth;
+    
+    // 初始化华为健康服务
+    wx.requirePlugin('huawei-health').init({
+      appId: appId,
+      appSecret: appSecret,
+      success: () => {
+        console.log('华为健康服务初始化成功');
+      },
+      fail: (error) => {
+        console.error('华为健康服务初始化失败:', error);
+      }
     });
   }
 }); 

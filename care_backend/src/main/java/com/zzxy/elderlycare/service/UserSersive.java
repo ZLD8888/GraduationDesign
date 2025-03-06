@@ -15,4 +15,6 @@ public interface UserSersive {
     void changePassword(Integer id, ChangePasswordDto changePassword);
 
     User getCaregiverById(Integer id);
+
+    Integer getIdByPhone(String phone);
 }

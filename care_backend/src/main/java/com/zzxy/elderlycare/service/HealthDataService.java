@@ -2,6 +2,8 @@ package com.zzxy.elderlycare.service;
 
 import com.zzxy.elderlycare.entity.Elderly;
 import com.zzxy.elderlycare.entity.HealthData;
+
+import java.util.Arrays;
 import java.util.List;
 
 public interface HealthDataService {
@@ -14,4 +16,10 @@ public interface HealthDataService {
     List<Elderly> getElderlyListByStaffId(Long staffId);
     List<Elderly> getElderlyListByFamilyId(Long familyId);
     Elderly getElderlyById(Long elderlyId);
-} 
+    boolean checkDeviceBind(Long elderlyId);
+    void bindDevice(Long elderlyId);
+
+    List<Elderly> getAllElderlyBindList();
+
+    HealthData getLatestHealthData(Long elderlyId);
+}
